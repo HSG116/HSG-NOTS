@@ -1,0 +1,24 @@
+# Core Django
+Django==4.2.7
+python-decouple==3.8
+
+# Image processing
+Pillow>=10.0.0
+
+# HTTP requests
+requests==2.31.0
+
+# Forms and UI
+django-crispy-forms==2.1
+crispy-bootstrap5==0.7
+django-widget-tweaks==1.5.0
+
+# Development tools
+django-extensions==3.2.3
+
+# Static files
+whitenoise==6.6.0
+
+# Optional: Production database
+# psycopg2-binary==2.9.7  # PostgreSQL
+# mysqlclient==2.2.0      # MySQL
