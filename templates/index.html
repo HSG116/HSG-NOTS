@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSG Notes - نظام إدارة المهام الذكي</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="HSG Notes - نظام إدارة المهام الذكي المطور من شركة HSG. نظم مهامك، ارفع إنتاجيتك، واستفد من الذكاء الاصطناعي في إدارة وقتك بفعالية.">
+    <meta name="keywords" content="إدارة المهام, تنظيم الوقت, إنتاجية, HSG, ذكاء اصطناعي, مساعد ذكي, تقويم, ملاحظات">
+    <meta name="author" content="HSG Company - Mohamed Ziad">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="HSG Notes - نظام إدارة المهام الذكي">
+    <meta property="og:description" content="نظم مهامك، ارفع إنتاجيتك، واستفد من الذكاء الاصطناعي في إدارة وقتك بفعالية">
+    <meta property="og:image" content="https://i.postimg.cc/6QW52R6Z/1000023429.png">
+    <meta property="og:url" content="https://hsg-ashy.vercel.app/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HSG Notes - نظام إدارة المهام الذكي">
+    <meta name="twitter:description" content="نظم مهامك، ارفع إنتاجيتك، واستفد من الذكاء الاصطناعي في إدارة وقتك بفعالية">
+    <meta name="twitter:image" content="https://i.postimg.cc/6QW52R6Z/1000023429.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/90zyZYzP/note-1-1.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/90zyZYzP/note-1-1.png">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #25D366;
+            --secondary-color: #128C7E;
+            --dark-color: #075E54;
+            --light-color: #f8f9fa;
+            --white-color: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #6c757d;
+            --shadow-light: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-medium: 0 10px 30px rgba(0,0,0,0.12);
+            --shadow-heavy: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--dark-color) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="1000,100 1000,0 0,100"/></svg>');
+            background-size: cover;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.3);
+            box-shadow: var(--shadow-heavy);
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-logo:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(255,255,255,0); }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
+            font-weight: 400;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn-hero {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-width: 200px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary-hero {
+            background: var(--white-color);
+            color: var(--primary-color);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+            color: var(--secondary-color);
+        }
+
+        .btn-secondary-hero {
+            background: transparent;
+            color: var(--white-color);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .btn-secondary-hero:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--white-color);
+            transform: translateY(-3px);
+            color: var(--white-color);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background: var(--light-color);
+        }
+
+        .feature-card {
+            background: var(--white-color);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            border: none;
+            height: 100%;
+            margin-bottom: 30px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature-card h4 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--dark-color) 100%);
+            color: white;
+            padding: 60px 0;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .contact-btn i {
+            font-size: 1.2rem;
+            margin-left: 8px;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .hero-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-hero {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .features-section {
+                padding: 50px 0;
+            }
+
+            .feature-card {
+                padding: 30px 20px;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-btn {
+                width: 250px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="hero-content">
+                        <img src="https://i.postimg.cc/6QW52R6Z/1000023429.png" alt="HSG Notes Logo" class="hero-logo">
+
+                        <h1 class="hero-title">HSG Notes</h1>
+                        <p class="hero-subtitle">نظام إدارة المهام الذكي</p>
+                        <p class="hero-description">
+                            نظم مهامك، ارفع إنتاجيتك، واستفد من الذكاء الاصطناعي في إدارة وقتك بفعالية.
+                            منصة شاملة لتنظيم حياتك اليومية مع مساعد ذكي متطور.
+                        </p>
+
+                        <div class="action-buttons">
+                            <a href="/accounts/login/" class="btn-hero btn-primary-hero">
+                                <i class="fas fa-sign-in-alt"></i>
+                                تسجيل الدخول
+                            </a>
+                            <a href="/accounts/signup/" class="btn-hero btn-secondary-hero">
+                                <i class="fas fa-user-plus"></i>
+                                إنشاء حساب جديد
+                            </a>
+                        </div>
+
+                        <!-- Quick Info -->
+                        <div class="mt-4">
+                            <p style="opacity: 0.8; font-size: 0.9rem;">
+                                <i class="fas fa-info-circle me-2"></i>
+                                يمكنك تسجيل الدخول باستخدام Gmail أو اسم المستخدم
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="display-5 fw-bold text-dark mb-3">مميزات HSG Notes</h2>
+                    <p class="lead text-muted">اكتشف كيف يمكن لـ HSG Notes أن يغير طريقة إدارتك للمهام</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h4>إدارة المهام</h4>
+                        <p>نظم مهامك اليومية بسهولة مع إمكانيات متقدمة للتصنيف والتنظيم</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h4>الذكاء الاصطناعي</h4>
+                        <p>مساعد ذكي متطور يساعدك في تنظيم مهامك وتحسين إنتاجيتك</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4>التقويم الذكي</h4>
+                        <p>تقويم تفاعلي لتنظيم مواعيدك ومهامك بطريقة بصرية جذابة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-info">
+                <h3 class="mb-3">تواصل مع شركة HSG</h3>
+                <p class="mb-4">نحن هنا لمساعدتك في أي وقت</p>
+            </div>
+
+            <div class="contact-links">
+                <a href="https://wa.me/message/4TYV7IWEUNAXN1" class="contact-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    واتساب
+                </a>
+                <a href="mailto:cpshzt@gmail.com" class="contact-btn">
+                    <i class="fas fa-envelope"></i>
+                    البريد الإلكتروني
+                </a>
+                <a href="https://www.youtube.com/@HSG-NEW" class="contact-btn" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                    يوتيوب
+                </a>
+                <a href="https://www.tiktok.com/@hsg_new" class="contact-btn" target="_blank">
+                    <i class="fab fa-tiktok"></i>
+                    تيك توك
+                </a>
+                <a href="/about/" class="contact-btn">
+                    <i class="fas fa-info-circle"></i>
+                    من نحن
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

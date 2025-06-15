@@ -1,0 +1,1248 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "التقويم" %} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+<style>
+    /* تصميم التقويم المحسن */
+    .calendar-page-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-radius: 25px;
+        padding: 30px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(37, 211, 102, 0.3);
+    }
+
+    .calendar-page-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .calendar-page-header-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .calendar-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .calendar-title-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    .calendar-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+
+    .add-task-btn {
+        background: rgba(255,255,255,0.2);
+        border: 2px solid rgba(255,255,255,0.3);
+        color: white !important;
+        border-radius: 20px;
+        padding: 12px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+        text-decoration: none !important;
+    }
+
+    .add-task-btn::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+        animation: shine 3s ease-in-out infinite;
+    }
+
+    .add-task-btn:hover {
+        background: rgba(255,255,255,0.3);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        color: white !important;
+    }
+
+
+
+    /* تصميم التقويم الرئيسي */
+    .fc {
+        font-family: {% if LANGUAGE_CODE == 'ar' %}'Cairo'{% else %}'Inter'{% endif %}, sans-serif;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        border: 1px solid rgba(37, 211, 102, 0.1);
+    }
+
+    .fc-toolbar {
+        background: linear-gradient(135deg, rgba(37, 211, 102, 0.1), rgba(0, 123, 255, 0.1));
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(37, 211, 102, 0.2);
+    }
+
+    .fc-toolbar-title {
+        font-size: 1.8rem !important;
+        font-weight: 800 !important;
+        color: var(--primary-color);
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .fc-button {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        padding: 8px 16px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3) !important;
+    }
+
+    .fc-button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4) !important;
+    }
+
+    .fc-button:active {
+        transform: translateY(0) !important;
+    }
+
+    .fc-event {
+        border-radius: 8px !important;
+        border: none !important;
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        margin: 2px 1px !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    .fc-event::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .fc-event:hover::before {
+        left: 100%;
+    }
+
+    .fc-event:hover {
+        transform: scale(1.05) !important;
+        z-index: 10 !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+    }
+
+    .fc-daygrid-event {
+        margin: 2px 1px !important;
+    }
+
+    .fc-day-today {
+        background: linear-gradient(135deg, rgba(37, 211, 102, 0.1), rgba(0, 123, 255, 0.05)) !important;
+        border: 2px solid rgba(37, 211, 102, 0.3) !important;
+    }
+
+    .fc-day-header {
+        background: rgba(37, 211, 102, 0.05);
+        font-weight: 700;
+        color: var(--primary-color);
+        padding: 10px 0;
+    }
+
+    .fc-daygrid-day-number {
+        font-weight: 600;
+        color: #495057;
+        padding: 8px;
+    }
+
+    .fc-day-today .fc-daygrid-day-number {
+        background: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .calendar-container {
+        background: white;
+        border-radius: 20px;
+        padding: 0;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        border: 1px solid rgba(37, 211, 102, 0.1);
+        overflow: hidden;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-10px) rotate(1deg); }
+        66% { transform: translateY(5px) rotate(-1deg); }
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    }
+    
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+    }
+
+    /* Task status styling */
+    .fc-event.task-completed {
+        opacity: 0.7;
+        text-decoration: line-through;
+    }
+
+    .fc-event.task-pending {
+        border-left: 3px solid #ffc107 !important;
+    }
+
+    .fc-event.task-in_progress {
+        border-left: 3px solid #17a2b8 !important;
+        animation: pulse 2s infinite;
+    }
+
+    .fc-event.priority-urgent {
+        background-color: #dc3545 !important;
+        color: white !important;
+        font-weight: bold;
+    }
+
+    .fc-event.priority-high {
+        background-color: #fd7e14 !important;
+        color: white !important;
+    }
+
+    .fc-event.priority-medium {
+        background-color: #ffc107 !important;
+        color: #212529 !important;
+    }
+
+    .fc-event.priority-low {
+        background-color: #28a745 !important;
+        color: white !important;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.7; }
+        100% { opacity: 1; }
+    }
+
+    /* RTL support */
+    .fc-direction-rtl .fc-toolbar {
+        direction: rtl;
+    }
+
+    .fc-direction-rtl .fc-button-group {
+        direction: ltr;
+    }
+
+    /* تصميم الإحصائيات المحسن */
+    .calendar-stats {
+        background: linear-gradient(135deg, rgba(37, 211, 102, 0.05), rgba(0, 123, 255, 0.05));
+        border: 1px solid rgba(37, 211, 102, 0.2);
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 25px;
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .calendar-stats::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 30%, rgba(37, 211, 102, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .calendar-stats h5 {
+        color: var(--primary-color);
+        font-weight: 800;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 20px 15px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .stat-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .stat-item:hover::before {
+        left: 100%;
+    }
+
+    .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #6c757d;
+        position: relative;
+        z-index: 2;
+    }
+
+    .stat-item.total .stat-number { color: #007bff; }
+    .stat-item.completed .stat-number { color: #28a745; }
+    .stat-item.pending .stat-number { color: #ffc107; }
+    .stat-item.overdue .stat-number { color: #dc3545; }
+    .stat-item.progress .stat-number { color: #17a2b8; }
+
+    /* تصميم الفلاتر المحسن */
+    .filters-section {
+        background: rgba(255,255,255,0.9);
+        border-radius: 15px;
+        padding: 20px;
+        position: relative;
+        z-index: 2;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .form-check {
+        margin-bottom: 12px;
+        padding: 10px 15px;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(37, 211, 102, 0.1);
+    }
+
+    .form-check:hover {
+        background: rgba(37, 211, 102, 0.1);
+        transform: translateX(5px);
+    }
+
+    .form-check-input:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .form-check-label {
+        font-weight: 600;
+        color: #495057;
+        cursor: pointer;
+    }
+
+    .apply-filters-btn {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border: none;
+        border-radius: 15px;
+        padding: 12px 20px;
+        font-weight: 600;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .apply-filters-btn::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+        animation: shine 3s ease-in-out infinite;
+    }
+
+    .apply-filters-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <!-- رأس الصفحة المحسن -->
+    <div class="calendar-page-header">
+        <div class="calendar-page-header-content">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="calendar-title">
+                        <div class="calendar-title-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        {% trans "التقويم الذكي" %}
+                    </h1>
+                    <p class="calendar-subtitle">{% trans "عرض وإدارة جميع مهامك في تقويم تفاعلي ومتطور" %}</p>
+                </div>
+                <div class="d-flex gap-3">
+
+                    <!-- زر إضافة مهمة -->
+                    <a href="{% url 'tasks:create' %}" class="add-task-btn">
+                        <span style="position: relative; z-index: 2; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-plus"></i>
+                            {% trans "إضافة مهمة" %}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- إحصائيات التقويم المحسنة -->
+        <div class="col-lg-3 mb-4">
+            <div class="calendar-stats">
+                <h5 class="mb-3">
+                    <i class="fas fa-chart-pie me-2"></i>
+                    {% trans "إحصائيات شاملة" %}
+                </h5>
+
+                <div class="stat-item total">
+                    <div class="stat-number" id="totalTasks">0</div>
+                    <div class="stat-label">{% trans "إجمالي المهام" %}</div>
+                </div>
+
+                <div class="stat-item completed">
+                    <div class="stat-number" id="completedTasks">0</div>
+                    <div class="stat-label">{% trans "مهام مكتملة" %}</div>
+                </div>
+
+                <div class="stat-item progress">
+                    <div class="stat-number" id="inProgressTasks">0</div>
+                    <div class="stat-label">{% trans "قيد التنفيذ" %}</div>
+                </div>
+
+                <div class="stat-item pending">
+                    <div class="stat-number" id="pendingTasks">0</div>
+                    <div class="stat-label">{% trans "مهام معلقة" %}</div>
+                </div>
+
+                <div class="stat-item overdue">
+                    <div class="stat-number" id="overdueTasks">0</div>
+                    <div class="stat-label">{% trans "مهام متأخرة" %}</div>
+                </div>
+
+                <!-- إحصائيات إضافية -->
+                <div class="stat-item total">
+                    <div class="stat-number" id="todayTasks">0</div>
+                    <div class="stat-label">{% trans "مهام اليوم" %}</div>
+                </div>
+
+                <div class="stat-item pending">
+                    <div class="stat-number" id="weekTasks">0</div>
+                    <div class="stat-label">{% trans "مهام الأسبوع" %}</div>
+                </div>
+            </div>
+
+            <!-- فلاتر ذكية محسنة -->
+            <div class="calendar-stats">
+                <h5 class="mb-3">
+                    <i class="fas fa-sliders-h me-2"></i>
+                    {% trans "فلاتر ذكية" %}
+                </h5>
+
+                <div class="filters-section">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="showCompleted" checked>
+                        <label class="form-check-label" for="showCompleted">
+                            <i class="fas fa-check-circle me-2 text-success"></i>
+                            {% trans "المهام المكتملة" %}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="showPending" checked>
+                        <label class="form-check-label" for="showPending">
+                            <i class="fas fa-clock me-2 text-warning"></i>
+                            {% trans "المهام المعلقة" %}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="showInProgress" checked>
+                        <label class="form-check-label" for="showInProgress">
+                            <i class="fas fa-spinner me-2 text-info"></i>
+                            {% trans "قيد التنفيذ" %}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="showOverdue" checked>
+                        <label class="form-check-label" for="showOverdue">
+                            <i class="fas fa-exclamation-triangle me-2 text-danger"></i>
+                            {% trans "المهام المتأخرة" %}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="showToday" checked>
+                        <label class="form-check-label" for="showToday">
+                            <i class="fas fa-calendar-day me-2 text-primary"></i>
+                            {% trans "مهام اليوم فقط" %}
+                        </label>
+                    </div>
+
+                    <button class="apply-filters-btn w-100" onclick="applyFilters()">
+                        <span style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fas fa-filter"></i>
+                            {% trans "تطبيق الفلاتر" %}
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- إجراءات سريعة -->
+            <div class="calendar-stats">
+                <h5 class="mb-3">
+                    <i class="fas fa-bolt me-2"></i>
+                    {% trans "إجراءات سريعة" %}
+                </h5>
+
+                <div class="filters-section">
+                    <button class="apply-filters-btn w-100 mb-2" onclick="goToToday()">
+                        <span style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fas fa-calendar-day"></i>
+                            {% trans "اليوم" %}
+                        </span>
+                    </button>
+
+                    <button class="apply-filters-btn w-100 mb-2" onclick="refreshCalendar()">
+                        <span style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fas fa-sync-alt"></i>
+                            {% trans "تحديث" %}
+                        </span>
+                    </button>
+
+                    <button class="apply-filters-btn w-100" onclick="exportCalendar()">
+                        <span style="position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fas fa-download"></i>
+                            {% trans "تصدير" %}
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="col-lg-9">
+            <div class="calendar-container">
+                <div id="calendar"></div>
+                
+                <!-- Legend -->
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #28a745;"></div>
+                        <span>{% trans "أولوية منخفضة" %}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #ffc107;"></div>
+                        <span>{% trans "أولوية متوسطة" %}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #fd7e14;"></div>
+                        <span>{% trans "أولوية عالية" %}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #dc3545;"></div>
+                        <span>{% trans "أولوية عاجلة" %}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #6c757d;"></div>
+                        <span>{% trans "مكتملة" %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Task Detail Modal -->
+<div class="modal fade" id="taskModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="taskModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="taskModalBody">
+                <!-- Task details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    {% trans "إغلاق" %}
+                </button>
+                <a href="#" class="btn btn-primary" id="viewTaskBtn">
+                    {% trans "عرض التفاصيل" %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<script>
+let calendar;
+let allEvents = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    
+    calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: '{% if LANGUAGE_CODE == "ar" %}ar{% else %}en{% endif %}',
+        direction: '{% if LANGUAGE_CODE == "ar" %}rtl{% else %}ltr{% endif %}',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        buttonText: {
+            today: '{% trans "اليوم" %}',
+            month: '{% trans "شهر" %}',
+            week: '{% trans "أسبوع" %}',
+            day: '{% trans "يوم" %}',
+            list: '{% trans "قائمة" %}'
+        },
+        dayHeaderFormat: { weekday: 'short' },
+        titleFormat: { year: 'numeric', month: 'long' },
+        events: function(fetchInfo, successCallback, failureCallback) {
+            fetch('{% url "tasks:api_tasks" %}')
+                .then(response => response.json())
+                .then(data => {
+                    allEvents = data;
+                    updateStats(data);
+                    successCallback(data);
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                    failureCallback(error);
+                });
+        },
+        eventClick: function(info) {
+            showTaskModal(info.event);
+        },
+        eventDidMount: function(info) {
+            // Add tooltip with better formatting
+            const priority = info.event.extendedProps.priority;
+            const status = info.event.extendedProps.status;
+            const category = info.event.extendedProps.category || '{% trans "بدون تصنيف" %}';
+
+            info.el.title = info.event.title + '\n' +
+                           '{% trans "التصنيف" %}: ' + category + '\n' +
+                           '{% trans "الأولوية" %}: ' + priority + '\n' +
+                           '{% trans "الحالة" %}: ' + status;
+
+            // Add status class for styling
+            info.el.classList.add('task-' + status);
+            info.el.classList.add('priority-' + priority);
+        },
+        dayMaxEvents: 3,
+        moreLinkClick: 'popover',
+        height: 'auto',
+        aspectRatio: 1.8
+    });
+    
+    calendar.render();
+});
+
+// تحديث الإحصائيات المحسنة
+function updateStats(events) {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const weekFromNow = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
+
+    // الإحصائيات الأساسية
+    const total = events.length;
+    let completed = 0;
+    let pending = 0;
+    let inProgress = 0;
+    let overdue = 0;
+    let todayTasks = 0;
+    let weekTasks = 0;
+
+    events.forEach(event => {
+        const eventDate = new Date(event.start);
+        const status = event.extendedProps.status;
+
+        // حساب الحالات
+        if (status === 'completed') {
+            completed++;
+        } else if (status === 'pending') {
+            pending++;
+        } else if (status === 'in_progress') {
+            inProgress++;
+        }
+
+        // حساب المتأخرة
+        if (eventDate < now && status !== 'completed') {
+            overdue++;
+        }
+
+        // حساب مهام اليوم
+        if (eventDate >= today && eventDate < new Date(today.getTime() + 24 * 60 * 60 * 1000)) {
+            todayTasks++;
+        }
+
+        // حساب مهام الأسبوع
+        if (eventDate >= today && eventDate < weekFromNow) {
+            weekTasks++;
+        }
+    });
+
+    // تحديث العناصر مع تأثيرات بصرية
+    updateStatElement('totalTasks', total);
+    updateStatElement('completedTasks', completed);
+    updateStatElement('pendingTasks', pending);
+    updateStatElement('inProgressTasks', inProgress);
+    updateStatElement('overdueTasks', overdue);
+    updateStatElement('todayTasks', todayTasks);
+    updateStatElement('weekTasks', weekTasks);
+}
+
+// تحديث عنصر إحصائية مع تأثير بصري
+function updateStatElement(elementId, newValue) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        const currentValue = parseInt(element.textContent) || 0;
+
+        if (currentValue !== newValue) {
+            // تأثير التكبير والتصغير
+            element.style.transform = 'scale(1.2)';
+            element.style.transition = 'all 0.3s ease';
+
+            setTimeout(() => {
+                element.textContent = newValue;
+                element.style.transform = 'scale(1)';
+
+                // تأثير الوميض للقيم الجديدة
+                if (newValue > currentValue) {
+                    element.style.color = '#28a745';
+                    setTimeout(() => {
+                        element.style.color = '';
+                    }, 1000);
+                }
+            }, 150);
+        }
+    }
+}
+
+// Show task modal
+function showTaskModal(event) {
+    document.getElementById('taskModalTitle').textContent = event.title;
+    document.getElementById('viewTaskBtn').href = event.url;
+    
+    const modalBody = document.getElementById('taskModalBody');
+    modalBody.innerHTML = `
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>{% trans "الأولوية" %}:</strong> ${event.extendedProps.priority}</p>
+                <p><strong>{% trans "الحالة" %}:</strong> ${event.extendedProps.status}</p>
+                <p><strong>{% trans "التصنيف" %}:</strong> ${event.extendedProps.category || '{% trans "بدون تصنيف" %}'}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>{% trans "التاريخ" %}:</strong> ${new Date(event.start).toLocaleDateString('ar-SA')}</p>
+                <p><strong>{% trans "الوقت" %}:</strong> ${new Date(event.start).toLocaleTimeString('ar-SA')}</p>
+            </div>
+        </div>
+    `;
+    
+    const modal = new bootstrap.Modal(document.getElementById('taskModal'));
+    modal.show();
+}
+
+// تطبيق الفلاتر المحسنة
+function applyFilters() {
+    const showCompleted = document.getElementById('showCompleted').checked;
+    const showPending = document.getElementById('showPending').checked;
+    const showInProgress = document.getElementById('showInProgress').checked;
+    const showOverdue = document.getElementById('showOverdue').checked;
+    const showToday = document.getElementById('showToday').checked;
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+
+    const filteredEvents = allEvents.filter(event => {
+        const status = event.extendedProps.status;
+        const eventDate = new Date(event.start);
+        const isOverdue = eventDate < now && status !== 'completed';
+        const isToday = eventDate >= today && eventDate < tomorrow;
+
+        // فلتر الحالات
+        if (status === 'completed' && !showCompleted) return false;
+        if (status === 'pending' && !showPending) return false;
+        if (status === 'in_progress' && !showInProgress) return false;
+        if (isOverdue && !showOverdue) return false;
+
+        // فلتر اليوم
+        if (showToday && !isToday) return false;
+
+        return true;
+    });
+
+    // تحديث التقويم مع تأثير بصري
+    calendar.removeAllEvents();
+
+    // إضافة تأثير التحميل
+    const calendarEl = document.getElementById('calendar');
+    calendarEl.style.opacity = '0.5';
+
+    setTimeout(() => {
+        calendar.addEventSource(filteredEvents);
+        updateStats(filteredEvents);
+        calendarEl.style.opacity = '1';
+
+        // إظهار رسالة النتائج
+        showFilterResults(filteredEvents.length, allEvents.length);
+    }, 300);
+}
+
+// إظهار نتائج الفلترة
+function showFilterResults(filtered, total) {
+    const message = filtered === total ?
+        `عرض جميع المهام (${total})` :
+        `عرض ${filtered} من ${total} مهمة`;
+
+    // يمكن إضافة toast notification هنا
+    console.log(message);
+}
+
+// Quick actions
+function goToToday() {
+    calendar.today();
+}
+
+function goToNextMonth() {
+    calendar.next();
+}
+
+function goToPrevMonth() {
+    calendar.prev();
+}
+
+// تحديث التقويم
+function refreshCalendar() {
+    const calendarEl = document.getElementById('calendar');
+    calendarEl.style.opacity = '0.5';
+
+    // إعادة تحميل البيانات
+    fetch('{% url "tasks:api_tasks" %}')
+        .then(response => response.json())
+        .then(data => {
+            allEvents = data;
+            calendar.removeAllEvents();
+            calendar.addEventSource(data);
+            updateStats(data);
+            calendarEl.style.opacity = '1';
+
+            // رسالة نجاح
+            showNotification('تم تحديث التقويم بنجاح', 'success');
+        })
+        .catch(error => {
+            console.error('Error refreshing calendar:', error);
+            calendarEl.style.opacity = '1';
+            showNotification('حدث خطأ في تحديث التقويم', 'error');
+        });
+}
+
+// تصدير التقويم كـ PDF
+function exportCalendar() {
+    // إنشاء نافذة جديدة للطباعة
+    const printWindow = window.open('', '_blank');
+
+    // إنشاء محتوى HTML للتصدير
+    const currentDate = new Date().toLocaleDateString('ar-SA');
+    const currentMonth = calendar.view.title;
+
+    // تجميع المهام حسب التاريخ
+    const tasksByDate = {};
+    allEvents.forEach(event => {
+        const date = new Date(event.start).toLocaleDateString('ar-SA');
+        if (!tasksByDate[date]) {
+            tasksByDate[date] = [];
+        }
+        tasksByDate[date].push(event);
+    });
+
+    // إنشاء HTML للتصدير
+    const htmlContent = `
+        <!DOCTYPE html>
+        <html dir="rtl" lang="ar">
+        <head>
+            <meta charset="UTF-8">
+            <title>تقرير التقويم - ${currentMonth}</title>
+            <style>
+                body {
+                    font-family: 'Arial', sans-serif;
+                    margin: 20px;
+                    color: #333;
+                    direction: rtl;
+                }
+                .header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    padding: 20px;
+                    background: linear-gradient(135deg, #25d366, #128c7e);
+                    color: white;
+                    border-radius: 10px;
+                }
+                .header h1 {
+                    margin: 0;
+                    font-size: 2rem;
+                }
+                .header p {
+                    margin: 5px 0 0 0;
+                    opacity: 0.9;
+                }
+                .stats {
+                    display: flex;
+                    justify-content: space-around;
+                    margin-bottom: 30px;
+                    flex-wrap: wrap;
+                }
+                .stat-item {
+                    text-align: center;
+                    padding: 15px;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    margin: 5px;
+                    min-width: 120px;
+                }
+                .stat-number {
+                    font-size: 2rem;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+                .stat-label {
+                    font-size: 0.9rem;
+                    color: #666;
+                }
+                .date-section {
+                    margin-bottom: 25px;
+                    page-break-inside: avoid;
+                }
+                .date-header {
+                    background: #25d366;
+                    color: white;
+                    padding: 10px 15px;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+                .task-item {
+                    background: white;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    padding: 10px;
+                    margin-bottom: 8px;
+                    border-right: 4px solid #25d366;
+                }
+                .task-title {
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+                .task-details {
+                    font-size: 0.9rem;
+                    color: #666;
+                }
+                .task-status {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    border-radius: 12px;
+                    font-size: 0.8rem;
+                    font-weight: bold;
+                    margin-left: 5px;
+                }
+                .status-completed { background: #d4edda; color: #155724; }
+                .status-pending { background: #fff3cd; color: #856404; }
+                .status-in_progress { background: #d1ecf1; color: #0c5460; }
+                .status-overdue { background: #f8d7da; color: #721c24; }
+                .priority-urgent { border-right-color: #dc3545; }
+                .priority-high { border-right-color: #fd7e14; }
+                .priority-medium { border-right-color: #ffc107; }
+                .priority-low { border-right-color: #28a745; }
+                @media print {
+                    body { margin: 0; }
+                    .no-print { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>📅 تقرير التقويم</h1>
+                <p>${currentMonth} - تم إنشاؤه في ${currentDate}</p>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" style="color: #007bff;">${allEvents.length}</div>
+                    <div class="stat-label">إجمالي المهام</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" style="color: #28a745;">${allEvents.filter(e => e.extendedProps.status === 'completed').length}</div>
+                    <div class="stat-label">مكتملة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" style="color: #17a2b8;">${allEvents.filter(e => e.extendedProps.status === 'in_progress').length}</div>
+                    <div class="stat-label">قيد التنفيذ</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" style="color: #ffc107;">${allEvents.filter(e => e.extendedProps.status === 'pending').length}</div>
+                    <div class="stat-label">معلقة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" style="color: #dc3545;">${allEvents.filter(e => new Date(e.start) < new Date() && e.extendedProps.status !== 'completed').length}</div>
+                    <div class="stat-label">متأخرة</div>
+                </div>
+            </div>
+
+            ${Object.keys(tasksByDate).sort().map(date => `
+                <div class="date-section">
+                    <div class="date-header">📅 ${date}</div>
+                    ${tasksByDate[date].map(task => `
+                        <div class="task-item priority-${task.extendedProps.priority}">
+                            <div class="task-title">${task.title}</div>
+                            <div class="task-details">
+                                <span class="task-status status-${task.extendedProps.status}">
+                                    ${getStatusText(task.extendedProps.status)}
+                                </span>
+                                <span>الأولوية: ${getPriorityText(task.extendedProps.priority)}</span>
+                                ${task.extendedProps.category ? `<span>التصنيف: ${task.extendedProps.category}</span>` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('')}
+
+            <div class="no-print" style="text-align: center; margin-top: 30px;">
+                <button onclick="window.print()" style="background: #25d366; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    🖨️ طباعة التقرير
+                </button>
+                <button onclick="window.close()" style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                    ❌ إغلاق
+                </button>
+            </div>
+        </body>
+        </html>
+    `;
+
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+
+    showNotification('تم إنشاء تقرير PDF بنجاح', 'success');
+}
+
+// دوال مساعدة للنصوص
+function getStatusText(status) {
+    const statusTexts = {
+        'completed': 'مكتملة',
+        'pending': 'معلقة',
+        'in_progress': 'قيد التنفيذ'
+    };
+    return statusTexts[status] || status;
+}
+
+function getPriorityText(priority) {
+    const priorityTexts = {
+        'low': 'منخفضة',
+        'medium': 'متوسطة',
+        'high': 'عالية',
+        'urgent': 'عاجلة'
+    };
+    return priorityTexts[priority] || priority;
+}
+
+// إظهار الإشعارات
+function showNotification(message, type = 'info') {
+    // إنشاء عنصر الإشعار
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} alert-dismissible fade show`;
+    alertDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        border: none;
+    `;
+
+    alertDiv.innerHTML = `
+        <div class="d-flex align-items-center">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+            <span>${message}</span>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+
+    // إضافة الإشعار للصفحة
+    document.body.appendChild(alertDiv);
+
+    // إزالة الإشعار تلقائياً بعد 5 ثوان
+    setTimeout(() => {
+        if (alertDiv.parentNode) {
+            alertDiv.remove();
+        }
+    }, 5000);
+
+    console.log(`${type.toUpperCase()}: ${message}`);
+}
+
+// اختصارات لوحة المفاتيح المحسنة
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey || e.metaKey) {
+        switch(e.key) {
+            case 'ArrowLeft':
+                e.preventDefault();
+                goToPrevMonth();
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                goToNextMonth();
+                break;
+            case 'Home':
+                e.preventDefault();
+                goToToday();
+                break;
+            case 'r':
+                e.preventDefault();
+                refreshCalendar();
+                break;
+            case 'f':
+                e.preventDefault();
+                applyFilters();
+                break;
+        }
+    }
+
+    // اختصارات بدون Ctrl
+    switch(e.key) {
+        case 'Escape':
+            // إغلاق أي modal مفتوح
+            const modals = document.querySelectorAll('.modal.show');
+            modals.forEach(modal => {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) modalInstance.hide();
+            });
+            break;
+    }
+});
+
+
+
+
+
+// تحسينات إضافية عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    // إضافة tooltips للأزرار
+    const tooltips = document.querySelectorAll('[title]');
+    tooltips.forEach(element => {
+        new bootstrap.Tooltip(element);
+    });
+
+    // تحديث الإحصائيات كل دقيقة
+    setInterval(() => {
+        if (allEvents.length > 0) {
+            updateStats(allEvents);
+        }
+    }, 60000);
+
+
+});
+</script>
+{% endblock %}

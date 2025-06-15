@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "حذف المهمة" %} - {{ task.title }} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .delete-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-left: 5px solid #dc3545;
+    }
+    
+    .task-info {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+    }
+    
+    .btn-danger {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+    }
+    
+    .btn-secondary {
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+    }
+    
+    .warning-icon {
+        font-size: 4rem;
+        color: #dc3545;
+        margin-bottom: 1rem;
+    }
+    
+    .priority-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .priority-low { background: #d1ecf1; color: #0c5460; }
+    .priority-medium { background: #fff3cd; color: #856404; }
+    .priority-high { background: #f8d7da; color: #721c24; }
+    .priority-urgent { background: #d4edda; color: #155724; }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="delete-card">
+                <div class="text-center">
+                    <i class="fas fa-exclamation-triangle warning-icon"></i>
+                    <h3 class="text-danger mb-3">
+                        {% trans "تأكيد حذف المهمة" %}
+                    </h3>
+                    <p class="text-muted mb-4">
+                        {% trans "هل أنت متأكد من أنك تريد حذف هذه المهمة؟ لا يمكن التراجع عن هذا الإجراء." %}
+                    </p>
+                </div>
+
+                <!-- معلومات المهمة -->
+                <div class="task-info">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <h5 class="mb-2">
+                                <i class="fas fa-tasks me-2"></i>
+                                {{ task.title }}
+                            </h5>
+                            {% if task.description %}
+                                <p class="text-muted mb-2">{{ task.description|truncatewords:20 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <strong>{% trans "التصنيف" %}:</strong>
+                            {% if task.category %}
+                                <span class="badge bg-primary">{{ task.category.name }}</span>
+                            {% else %}
+                                <span class="text-muted">{% trans "غير محدد" %}</span>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <strong>{% trans "الأولوية" %}:</strong>
+                            <span class="priority-badge priority-{{ task.priority }}">
+                                {{ task.get_priority_display }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <strong>{% trans "الحالة" %}:</strong>
+                            <span class="badge bg-{% if task.status == 'completed' %}success{% elif task.status == 'in_progress' %}warning{% else %}secondary{% endif %}">
+                                {{ task.get_status_display }}
+                            </span>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <strong>{% trans "تاريخ الإنشاء" %}:</strong>
+                            <span class="text-muted">{{ task.created_at|date:"d/m/Y H:i" }}</span>
+                        </div>
+                    </div>
+                    
+                    {% if task.due_date %}
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <strong>{% trans "تاريخ الاستحقاق" %}:</strong>
+                                <span class="text-muted">{{ task.due_date|date:"d/m/Y H:i" }}</span>
+                                {% if task.is_overdue %}
+                                    <span class="badge bg-danger ms-2">{% trans "متأخرة" %}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    {% if task.attachment %}
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <strong>{% trans "المرفق" %}:</strong>
+                                <a href="{{ task.attachment.url }}" target="_blank" class="text-decoration-none">
+                                    <i class="fas fa-paperclip me-1"></i>
+                                    {{ task.attachment.name|slice:"10:" }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    {% if task.latitude and task.longitude %}
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <strong>{% trans "الموقع" %}:</strong>
+                                <a href="https://www.google.com/maps?q={{ task.latitude }},{{ task.longitude }}" 
+                                   target="_blank" class="text-decoration-none">
+                                    <i class="fas fa-map-marker-alt me-1"></i>
+                                    {% trans "عرض على الخريطة" %}
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- تحذير إضافي -->
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>{% trans "تحذير:" %}</strong>
+                    {% trans "سيتم حذف جميع البيانات المرتبطة بهذه المهمة بما في ذلك التعليقات والمرفقات." %}
+                </div>
+
+                <!-- نموذج الحذف -->
+                <form method="post" class="text-center">
+                    {% csrf_token %}
+                    
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <a href="{% url 'tasks:detail' task.pk %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            {% trans "إلغاء" %}
+                        </a>
+                        <a href="{% url 'tasks:edit' task.pk %}" class="btn btn-outline-primary">
+                            <i class="fas fa-edit me-2"></i>
+                            {% trans "تحرير بدلاً من الحذف" %}
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-2"></i>
+                            {% trans "نعم، احذف المهمة" %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // إضافة تأكيد إضافي عند الحذف
+    const deleteForm = document.querySelector('form');
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', function(e) {
+            const confirmed = confirm('{% trans "هل أنت متأكد تماماً من حذف هذه المهمة؟ لا يمكن التراجع عن هذا الإجراء." %}');
+            if (!confirmed) {
+                e.preventDefault();
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

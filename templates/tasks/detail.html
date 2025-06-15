@@ -1,0 +1,454 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ task.title }} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    #taskMap {
+        height: 300px;
+        border-radius: 10px;
+        margin-top: 15px;
+    }
+    
+    .task-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .task-meta {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border: 1px solid var(--border-color);
+    }
+    
+    .meta-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 10px;
+        background: var(--light-bg);
+        border-radius: 8px;
+    }
+    
+    .meta-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 16px;
+    }
+    
+    .task-image {
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .priority-badge {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: white;
+    }
+    
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+    
+    .action-buttons {
+        position: sticky;
+        top: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <!-- Task Header -->
+    <div class="task-header">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="d-flex align-items-center mb-3">
+                    {% if task.category %}
+                        <i class="{{ task.category.icon }} fa-2x me-3"></i>
+                        <div>
+                            <h1 class="h2 mb-1">{{ task.title }}</h1>
+                            <p class="mb-0 opacity-75">{{ task.category.name }}</p>
+                        </div>
+                    {% else %}
+                        <i class="fas fa-tasks fa-2x me-3"></i>
+                        <div>
+                            <h1 class="h2 mb-1">{{ task.title }}</h1>
+                            <p class="mb-0 opacity-75">{% trans "بدون تصنيف" %}</p>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex align-items-center">
+                    <span class="priority-badge me-3" style="background-color: {{ task.priority_color }};">
+                        {{ task.get_priority_display }}
+                    </span>
+                    <span class="status-badge bg-{{ task.status }}">
+                        {{ task.get_status_display }}
+                    </span>
+                    {% if task.is_overdue %}
+                        <span class="badge bg-danger ms-3">
+                            <i class="fas fa-exclamation-triangle me-1"></i>
+                            {% trans "متأخرة" %}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="col-md-4 text-end">
+                <div class="d-flex justify-content-end align-items-center">
+                    <div class="me-3">
+                        <small class="d-block opacity-75">{% trans "تم الإنشاء" %}</small>
+                        <strong>{{ task.created_at|date:"M d, Y" }}</strong>
+                    </div>
+                    {% if task.completed_at %}
+                        <div>
+                            <small class="d-block opacity-75">{% trans "تم الإكمال" %}</small>
+                            <strong>{{ task.completed_at|date:"M d, Y" }}</strong>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Description -->
+            {% if task.description %}
+                <div class="task-meta">
+                    <h4 class="mb-3">
+                        <i class="fas fa-align-left me-2"></i>
+                        {% trans "الوصف" %}
+                    </h4>
+                    <p class="lead">{{ task.description|linebreaks }}</p>
+                </div>
+            {% endif %}
+
+            <!-- Image -->
+            {% if task.image %}
+                <div class="task-meta">
+                    <h4 class="mb-3">
+                        <i class="fas fa-image me-2"></i>
+                        {% trans "الصورة المرفقة" %}
+                    </h4>
+                    <img src="{{ task.image.url }}" class="task-image" alt="{{ task.title }}">
+                </div>
+            {% endif %}
+
+            <!-- Location Map -->
+            {% if task.latitude and task.longitude %}
+                <div class="task-meta">
+                    <h4 class="mb-3">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        {% trans "الموقع" %}
+                    </h4>
+                    <p><strong>{{ task.location_name }}</strong></p>
+                    <div id="taskMap"></div>
+                    <div class="mt-3">
+                        <a href="https://www.google.com/maps?q={{ task.latitude }},{{ task.longitude }}" 
+                           target="_blank" class="btn btn-outline-primary">
+                            <i class="fas fa-external-link-alt me-2"></i>
+                            {% trans "فتح في خرائط Google" %}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Notes -->
+            {% if task.notes %}
+                <div class="task-meta">
+                    <h4 class="mb-3">
+                        <i class="fas fa-sticky-note me-2"></i>
+                        {% trans "ملاحظات إضافية" %}
+                    </h4>
+                    <div class="bg-light p-3 rounded">
+                        {{ task.notes|linebreaks }}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Attachment -->
+            {% if task.attachment %}
+                <div class="task-meta">
+                    <h4 class="mb-3">
+                        <i class="fas fa-paperclip me-2"></i>
+                        {% trans "المرفق" %}
+                    </h4>
+                    <a href="{{ task.attachment.url }}" class="btn btn-outline-secondary" download>
+                        <i class="fas fa-download me-2"></i>
+                        {% trans "تحميل المرفق" %}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Action Buttons -->
+            <div class="task-meta action-buttons">
+                <h4 class="mb-3">
+                    <i class="fas fa-cogs me-2"></i>
+                    {% trans "الإجراءات" %}
+                </h4>
+                
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success" onclick="toggleTaskStatus()">
+                        {% if task.status == 'completed' %}
+                            <i class="fas fa-undo me-2"></i>
+                            {% trans "إلغاء الإكمال" %}
+                        {% else %}
+                            <i class="fas fa-check me-2"></i>
+                            {% trans "إكمال المهمة" %}
+                        {% endif %}
+                    </button>
+                    
+                    <a href="{% url 'tasks:edit' task.pk %}" class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>
+                        {% trans "تحرير" %}
+                    </a>
+                    
+                    <button class="btn btn-info" onclick="shareTask()">
+                        <i class="fas fa-share me-2"></i>
+                        {% trans "مشاركة" %}
+                    </button>
+                    
+                    <button class="btn btn-warning" onclick="duplicateTask()">
+                        <i class="fas fa-copy me-2"></i>
+                        {% trans "تكرار" %}
+                    </button>
+                    
+                    <hr>
+                    
+                    <a href="{% url 'tasks:delete' task.pk %}" class="btn btn-outline-danger">
+                        <i class="fas fa-trash me-2"></i>
+                        {% trans "حذف" %}
+                    </a>
+                </div>
+            </div>
+
+            <!-- Task Details -->
+            <div class="task-meta">
+                <h4 class="mb-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    {% trans "تفاصيل المهمة" %}
+                </h4>
+                
+                {% if task.due_date %}
+                    <div class="meta-item">
+                        <div class="meta-icon bg-warning text-white">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <strong>{% trans "تاريخ الاستحقاق" %}</strong><br>
+                            <span class="text-muted">{{ task.due_date|date:"l, M d, Y H:i" }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if task.reminder_date %}
+                    <div class="meta-item">
+                        <div class="meta-icon bg-info text-white">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div>
+                            <strong>{% trans "تاريخ التذكير" %}</strong><br>
+                            <span class="text-muted">{{ task.reminder_date|date:"l, M d, Y H:i" }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if task.estimated_duration %}
+                    <div class="meta-item">
+                        <div class="meta-icon bg-secondary text-white">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div>
+                            <strong>{% trans "المدة المقدرة" %}</strong><br>
+                            <span class="text-muted">{{ task.estimated_duration }} {% trans "دقيقة" %}</span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if task.actual_duration %}
+                    <div class="meta-item">
+                        <div class="meta-icon bg-success text-white">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                        <div>
+                            <strong>{% trans "المدة الفعلية" %}</strong><br>
+                            <span class="text-muted">{{ task.actual_duration }} {% trans "دقيقة" %}</span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="meta-item">
+                    <div class="meta-icon bg-primary text-white">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <div>
+                        <strong>{% trans "تاريخ الإنشاء" %}</strong><br>
+                        <span class="text-muted">{{ task.created_at|date:"l, M d, Y H:i" }}</span>
+                    </div>
+                </div>
+
+                {% if task.updated_at != task.created_at %}
+                    <div class="meta-item">
+                        <div class="meta-icon bg-warning text-white">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div>
+                            <strong>{% trans "آخر تحديث" %}</strong><br>
+                            <span class="text-muted">{{ task.updated_at|date:"l, M d, Y H:i" }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="task-meta">
+                <h4 class="mb-3">
+                    <i class="fas fa-bolt me-2"></i>
+                    {% trans "إجراءات سريعة" %}
+                </h4>
+                
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary" onclick="askAIAboutTask()">
+                        <i class="fas fa-robot me-2"></i>
+                        {% trans "اسأل المساعد الذكي" %}
+                    </button>
+                    
+                    <button class="btn btn-outline-success" onclick="addToCalendar()">
+                        <i class="fas fa-calendar-plus me-2"></i>
+                        {% trans "إضافة للتقويم" %}
+                    </button>
+                    
+                    <a href="{% url 'tasks:list' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        {% trans "العودة للقائمة" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% if task.latitude and task.longitude %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Initialize map
+const map = L.map('taskMap').setView([{{ task.latitude }}, {{ task.longitude }}], 15);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Add marker
+L.marker([{{ task.latitude }}, {{ task.longitude }}])
+    .addTo(map)
+    .bindPopup('{{ task.location_name|escapejs }}')
+    .openPopup();
+</script>
+{% endif %}
+
+<script>
+// Toggle task status
+async function toggleTaskStatus() {
+    try {
+        const response = await fetch(`/tasks/{{ task.pk }}/toggle/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('حدث خطأ في تحديث حالة المهمة');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('حدث خطأ في الاتصال');
+    }
+}
+
+// Share task
+function shareTask() {
+    if (navigator.share) {
+        navigator.share({
+            title: '{{ task.title|escapejs }}',
+            text: '{{ task.description|escapejs|truncatewords:20 }}',
+            url: window.location.href
+        });
+    } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('تم نسخ رابط المهمة');
+        });
+    }
+}
+
+// Duplicate task
+function duplicateTask() {
+    if (confirm('هل تريد إنشاء نسخة من هذه المهمة؟')) {
+        const url = new URL('{% url "tasks:create" %}', window.location.origin);
+        url.searchParams.set('duplicate', '{{ task.pk }}');
+        window.location.href = url.toString();
+    }
+}
+
+// Ask AI about task
+function askAIAboutTask() {
+    const message = `ساعدني في هذه المهمة:\nالعنوان: {{ task.title|escapejs }}\nالوصف: {{ task.description|escapejs }}`;
+    window.open(`/ai/chat/?message=${encodeURIComponent(message)}`, '_blank');
+}
+
+// Add to calendar
+function addToCalendar() {
+    {% if task.due_date %}
+        const startDate = new Date('{{ task.due_date|date:"c" }}');
+        const endDate = new Date(startDate.getTime() + ({{ task.estimated_duration|default:60 }} * 60000));
+        
+        const event = {
+            title: '{{ task.title|escapejs }}',
+            start: startDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
+            end: endDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
+            description: '{{ task.description|escapejs }}',
+            location: '{{ task.location_name|escapejs }}'
+        };
+        
+        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.start}/${event.end}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+        
+        window.open(googleCalendarUrl, '_blank');
+    {% else %}
+        alert('لا يمكن إضافة المهمة للتقويم بدون تاريخ استحقاق');
+    {% endif %}
+}
+</script>
+{% endblock %}

@@ -1,0 +1,500 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "لوحة التحكم" %} - {{ block.super }}{% endblock %}
+
+{% block main_content %}
+<!-- تصميم الجوال -->
+<div class="d-block d-md-none">
+    <!-- رأس الجوال -->
+    <div class="mobile-header">
+        <h1 class="h4 mb-2">
+            {% if user.preferred_language == 'ar' %}
+                {% blocktrans with name=user.get_full_name %}مرحباً {{ name }}!{% endblocktrans %}
+            {% else %}
+                {% blocktrans with name=user.get_full_name %}Welcome {{ name }}!{% endblocktrans %}
+            {% endif %}
+        </h1>
+        <p class="mb-0 opacity-75">{% trans "إليك نظرة سريعة على مهامك اليوم" %}</p>
+    </div>
+
+    <!-- إحصائيات الجوال -->
+    <div class="mobile-stats-grid">
+        <div class="mobile-stat-card">
+            <div class="mobile-stat-icon" style="background: linear-gradient(135deg, #007bff, #0056b3);">
+                <i class="fas fa-tasks"></i>
+            </div>
+            <div class="mobile-stat-number">{{ total_tasks }}</div>
+            <div class="mobile-stat-label">{% trans "إجمالي المهام" %}</div>
+        </div>
+
+        <div class="mobile-stat-card">
+            <div class="mobile-stat-icon" style="background: linear-gradient(135deg, #28a745, #1e7e34);">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="mobile-stat-number">{{ completed_tasks }}</div>
+            <div class="mobile-stat-label">{% trans "مهام مكتملة" %}</div>
+        </div>
+
+        <div class="mobile-stat-card">
+            <div class="mobile-stat-icon" style="background: linear-gradient(135deg, #ffc107, #e0a800);">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="mobile-stat-number">{{ pending_tasks }}</div>
+            <div class="mobile-stat-label">{% trans "مهام معلقة" %}</div>
+        </div>
+
+        <div class="mobile-stat-card">
+            <div class="mobile-stat-icon" style="background: linear-gradient(135deg, #dc3545, #c82333);">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="mobile-stat-number">{{ overdue_tasks }}</div>
+            <div class="mobile-stat-label">{% trans "مهام متأخرة" %}</div>
+        </div>
+    </div>
+</div>
+
+<!-- تصميم سطح المكتب -->
+<div class="d-none d-md-block">
+    <!-- رأس سطح المكتب -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="dashboard-header">
+                <div class="dashboard-header-content">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="welcome-section">
+                                <h1 class="welcome-title">
+                                    {% if user.preferred_language == 'ar' %}
+                                        {% blocktrans with name=user.get_full_name %}مرحباً {{ name }}!{% endblocktrans %}
+                                    {% else %}
+                                        {% blocktrans with name=user.get_full_name %}Welcome {{ name }}!{% endblocktrans %}
+                                    {% endif %}
+                                </h1>
+                                <p class="welcome-subtitle">{% trans "إليك نظرة سريعة على مهامك اليوم" %}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="completion-widget">
+                                <div class="completion-info">
+                                    <small class="completion-label">{% trans "معدل الإنجاز" %}</small>
+                                    <h3 class="completion-rate">{{ completion_rate|default:0 }}%</h3>
+                                </div>
+                                <div class="completion-circle">
+                                    <svg width="80" height="80" viewBox="0 0 80 80">
+                                        <circle cx="40" cy="40" r="35" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="6"/>
+                                        <circle cx="40" cy="40" r="35" fill="none" stroke="#ffffff" stroke-width="6"
+                                                stroke-dasharray="{{ completion_rate|default:0|floatformat:0 }} 100"
+                                                stroke-dashoffset="25" stroke-linecap="round"
+                                                transform="rotate(-90 40 40)"/>
+                                    </svg>
+                                    <div class="completion-percentage">{{ completion_rate|default:0 }}%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- إحصائيات سطح المكتب -->
+    <div class="desktop-stats-grid">
+        <div class="desktop-stat-card">
+            <div class="desktop-stat-icon">
+                <i class="fas fa-tasks"></i>
+            </div>
+            <div class="desktop-stat-number">{{ total_tasks }}</div>
+            <p class="desktop-stat-label">{% trans "إجمالي المهام" %}</p>
+        </div>
+
+        <div class="desktop-stat-card">
+            <div class="desktop-stat-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="desktop-stat-number">{{ completed_tasks }}</div>
+            <p class="desktop-stat-label">{% trans "مهام مكتملة" %}</p>
+        </div>
+
+        <div class="desktop-stat-card">
+            <div class="desktop-stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="desktop-stat-number">{{ pending_tasks }}</div>
+            <p class="desktop-stat-label">{% trans "مهام معلقة" %}</p>
+        </div>
+
+        <div class="desktop-stat-card">
+            <div class="desktop-stat-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="desktop-stat-number">{{ overdue_tasks }}</div>
+            <p class="desktop-stat-label">{% trans "مهام متأخرة" %}</p>
+        </div>
+    </div>
+</div>
+
+<!-- المهام الحديثة - تصميم الجوال -->
+<div class="d-block d-md-none">
+    <div class="mobile-section">
+        <div class="mobile-section-header">
+            <h2 class="mobile-section-title">
+                <i class="fas fa-history me-2"></i>
+                {% trans "المهام الحديثة" %}
+            </h2>
+            <a href="{% url 'tasks:list' %}" class="btn btn-sm btn-outline-primary">
+                {% trans "عرض الكل" %}
+            </a>
+        </div>
+        <div class="mobile-section-body">
+            {% if recent_tasks %}
+                {% for task in recent_tasks %}
+                    <div class="mobile-task-item">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 mt-1">
+                                {% if task.category %}
+                                    <i class="{{ task.category.icon }} text-primary"></i>
+                                {% else %}
+                                    <i class="fas fa-tasks text-muted"></i>
+                                {% endif %}
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1 fw-bold">
+                                    <a href="{{ task.get_absolute_url }}" class="text-decoration-none text-primary">
+                                        {{ task.title }}
+                                    </a>
+                                </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        {{ task.created_at|timesince }} {% trans "منذ" %}
+                                        {% if task.category %}
+                                            • {{ task.category.name }}
+                                        {% endif %}
+                                    </small>
+                                    <span class="badge bg-{{ task.status|default:'secondary' }}">
+                                        {{ task.get_status_display }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">{% trans "لا توجد مهام حديثة" %}</p>
+                    <a href="{% url 'tasks:create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>
+                        {% trans "إضافة مهمة جديدة" %}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- المهام الحديثة - تصميم سطح المكتب -->
+<div class="d-none d-md-block">
+    <div class="row">
+        <div class="col-12 col-lg-6 mb-4">
+            <div class="desktop-section">
+                <div class="desktop-section-header">
+                    <h5 class="desktop-section-title">
+                        <i class="fas fa-history"></i>
+                        {% trans "المهام الحديثة" %}
+                    </h5>
+                    <a href="{% url 'tasks:list' %}" class="btn btn-sm btn-outline-primary">
+                        {% trans "عرض الكل" %}
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if recent_tasks %}
+                        {% for task in recent_tasks %}
+                            <div class="task-item-mobile priority-{{ task.priority }} mb-2">
+                                <div class="d-flex align-items-start">
+                                    <div class="me-2 mt-1">
+                                        {% if task.category %}
+                                            <i class="{{ task.category.icon }} text-primary"></i>
+                                        {% else %}
+                                            <i class="fas fa-tasks text-muted"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1 task-title">
+                                            <a href="{{ task.get_absolute_url }}" class="text-decoration-none text-primary fw-bold">
+                                                {{ task.title }}
+                                            </a>
+                                        </h6>
+                                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start">
+                                            <small class="text-muted mb-1 mb-sm-0">
+                                                {{ task.created_at|timesince }} {% trans "منذ" %}
+                                                {% if task.category %}
+                                                    • {{ task.category.name }}
+                                                {% endif %}
+                                            </small>
+                                            <span class="badge bg-{{ task.status|default:'secondary' }} task-status-badge">
+                                                {{ task.get_status_display }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4 empty-state">
+                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">{% trans "لا توجد مهام حديثة" %}</p>
+                            <a href="{% url 'tasks:create' %}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>
+                                {% trans "إضافة مهمة جديدة" %}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- المهام القادمة -->
+        <div class="col-12 col-lg-6 mb-4">
+            <div class="desktop-section">
+                <div class="desktop-section-header">
+                    <h5 class="desktop-section-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        {% trans "المهام القادمة" %}
+                    </h5>
+                    <a href="{% url 'tasks:calendar' %}" class="btn btn-sm btn-outline-success">
+                        {% trans "التقويم" %}
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_tasks %}
+                        {% for task in upcoming_tasks %}
+                            <div class="task-item-mobile priority-{{ task.priority }} mb-2">
+                                <div class="d-flex align-items-start">
+                                    <div class="me-2 mt-1">
+                                        {% if task.category %}
+                                            <i class="{{ task.category.icon }} text-success"></i>
+                                        {% else %}
+                                            <i class="fas fa-tasks text-muted"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1 task-title">
+                                            <a href="{{ task.get_absolute_url }}" class="text-decoration-none text-primary fw-bold">
+                                                {{ task.title }}
+                                            </a>
+                                        </h6>
+                                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start">
+                                            <small class="text-muted mb-1 mb-sm-0">
+                                                <i class="fas fa-clock me-1"></i>
+                                                {{ task.due_date|date:"M d, H:i" }}
+                                            </small>
+                                            <span class="badge task-priority-badge" style="background-color: {{ task.priority_color }};">
+                                                {{ task.get_priority_display }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4 empty-state">
+                            <i class="fas fa-calendar-check fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">{% trans "لا توجد مهام قادمة" %}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- المهام القادمة - تصميم الجوال -->
+<div class="d-block d-md-none">
+    <div class="mobile-section">
+        <div class="mobile-section-header">
+            <h2 class="mobile-section-title">
+                <i class="fas fa-calendar-alt me-2"></i>
+                {% trans "المهام القادمة" %}
+            </h2>
+            <a href="{% url 'tasks:calendar' %}" class="btn btn-sm btn-outline-success">
+                {% trans "التقويم" %}
+            </a>
+        </div>
+        <div class="mobile-section-body">
+            {% if upcoming_tasks %}
+                {% for task in upcoming_tasks %}
+                    <div class="mobile-task-item">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 mt-1">
+                                {% if task.category %}
+                                    <i class="{{ task.category.icon }} text-success"></i>
+                                {% else %}
+                                    <i class="fas fa-tasks text-muted"></i>
+                                {% endif %}
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1 fw-bold">
+                                    <a href="{{ task.get_absolute_url }}" class="text-decoration-none text-primary">
+                                        {{ task.title }}
+                                    </a>
+                                </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="fas fa-clock me-1"></i>
+                                        {{ task.due_date|date:"M d, H:i" }}
+                                    </small>
+                                    <span class="badge" style="background-color: {{ task.priority_color }};">
+                                        {{ task.get_priority_display }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-calendar-check fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">{% trans "لا توجد مهام قادمة" %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- تنبيه المهام المتأخرة -->
+{% if overdue_task_list %}
+    <!-- تصميم الجوال -->
+    <div class="d-block d-md-none">
+        <div class="alert alert-danger alert-mobile">
+            <h5 class="alert-heading">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                {% trans "تنبيه: لديك مهام متأخرة!" %}
+            </h5>
+            <p class="mb-3">{% trans "هذه المهام تجاوزت موعد استحقاقها:" %}</p>
+            {% for task in overdue_task_list %}
+                <div class="overdue-task-item mb-2">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-exclamation-circle text-danger me-2"></i>
+                        <div class="flex-grow-1">
+                            <a href="{{ task.get_absolute_url }}" class="text-danger text-decoration-none fw-bold">
+                                {{ task.title }}
+                            </a>
+                            <small class="text-muted d-block">
+                                {{ task.due_date|timesince }} {% trans "متأخرة" %}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- تصميم سطح المكتب -->
+    <div class="d-none d-md-block">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="alert alert-danger alert-mobile">
+                    <h5 class="alert-heading">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        {% trans "تنبيه: لديك مهام متأخرة!" %}
+                    </h5>
+                    <p class="mb-3">{% trans "هذه المهام تجاوزت موعد استحقاقها:" %}</p>
+                    <div class="row">
+                        {% for task in overdue_task_list %}
+                            <div class="col-12 col-md-6 mb-2">
+                                <div class="overdue-task-item">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-exclamation-circle text-danger me-2"></i>
+                                        <div class="flex-grow-1">
+                                            <a href="{{ task.get_absolute_url }}" class="text-danger text-decoration-none fw-bold">
+                                                {{ task.title }}
+                                            </a>
+                                            <small class="text-muted d-block">
+                                                {{ task.due_date|timesince }} {% trans "متأخرة" %}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<!-- إحصائيات التصنيفات -->
+{% if category_stats %}
+    <!-- تصميم الجوال -->
+    <div class="d-block d-md-none">
+        <div class="mobile-section">
+            <div class="mobile-section-header">
+                <h2 class="mobile-section-title">
+                    <i class="fas fa-chart-pie me-2"></i>
+                    {% trans "إحصائيات التصنيفات" %}
+                </h2>
+            </div>
+            <div class="mobile-section-body">
+                {% for category in category_stats %}
+                    <div class="mobile-task-item">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="{{ category.icon }}" style="color: {{ category.color }}; font-size: 20px;"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold">{{ category.name }}</h6>
+                                <small class="text-muted">{{ category.task_count }} {% trans "مهمة" %}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- تصميم سطح المكتب -->
+    <div class="d-none d-md-block">
+        <div class="row">
+            <div class="col-12">
+                <div class="desktop-section">
+                    <div class="desktop-section-header">
+                        <h5 class="desktop-section-title">
+                            <i class="fas fa-chart-pie"></i>
+                            {% trans "إحصائيات التصنيفات" %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for category in category_stats %}
+                                <div class="col-6 col-md-3 col-lg-3 mb-3">
+                                    <div class="category-stat-item">
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-2 category-icon">
+                                                <i class="{{ category.icon }}" style="color: {{ category.color }};"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-0 category-name">{{ category.name }}</h6>
+                                                <small class="text-muted category-count">{{ category.task_count }} {% trans "مهمة" %}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<!-- زر الإضافة العائم - للكمبيوتر فقط -->
+<div class="d-none d-md-block">
+    <button class="floating-btn" onclick="location.href='{% url 'tasks:create' %}'" title="{% trans 'إضافة مهمة جديدة' %}">
+        <i class="fas fa-plus"></i>
+    </button>
+</div>
+{% endblock %}

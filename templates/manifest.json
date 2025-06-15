@@ -1,0 +1,36 @@
+{
+    "name": "HSG Notes - نظام إدارة المهام الذكي",
+    "short_name": "HSG Notes",
+    "description": "نظام إدارة المهام الذكي المطور من شركة HSG",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#25D366",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "ar",
+    "dir": "rtl",
+    "icons": [
+        {
+            "src": "https://i.postimg.cc/90zyZYzP/note-1-1.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "https://i.postimg.cc/90zyZYzP/note-1-1.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["productivity", "business", "utilities"],
+    "screenshots": [
+        {
+            "src": "https://i.postimg.cc/90zyZYzP/note-1-1.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "platform": "wide"
+        }
+    ]
+}
