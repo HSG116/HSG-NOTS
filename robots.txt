@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Allow: /about/
+Allow: /accounts/signup/
+Allow: /accounts/login/
+
+Disallow: /admin/
+Disallow: /accounts/logout/
+Disallow: /tasks/
+Disallow: /ai/
+Disallow: /media/
+
+Sitemap: /sitemap.xml
+
+# HSG Notes - نظام إدارة المهام الذكي
+# Developed by HSG Company
+# Website: https://hsg-ashy.vercel.app/
