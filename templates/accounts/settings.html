@@ -1,0 +1,631 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "الإعدادات" %} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .settings-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .settings-section {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border: 1px solid var(--border-color);
+    }
+    
+    .section-title {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--border-color);
+        display: flex;
+        align-items: center;
+    }
+    
+    .setting-item {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .setting-item:last-child {
+        border-bottom: none;
+    }
+    
+    .setting-info {
+        flex-grow: 1;
+    }
+    
+    .setting-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .setting-description {
+        color: var(--text-secondary);
+        font-size: 14px;
+    }
+    
+    .setting-control {
+        margin-left: 20px;
+    }
+    
+    .theme-preview {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 2px solid var(--border-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .theme-preview.active {
+        border-color: var(--primary-color);
+        transform: scale(1.1);
+    }
+    
+    .theme-preview.light {
+        background: linear-gradient(45deg, #ffffff 50%, #f8f9fa 50%);
+    }
+    
+    .theme-preview.dark {
+        background: linear-gradient(45deg, #212529 50%, #495057 50%);
+    }
+    
+    .language-flag {
+        width: 24px;
+        height: 18px;
+        border-radius: 3px;
+        margin-right: 10px;
+        display: inline-block;
+    }
+    
+    .flag-ar {
+        background: linear-gradient(to bottom, #ce1126 33%, #ffffff 33%, #ffffff 66%, #000000 66%);
+    }
+    
+    .flag-en {
+        background: linear-gradient(to bottom, #012169 25%, #ffffff 25%, #ffffff 75%, #c8102e 75%);
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .stat-card {
+        background: var(--light-bg);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    .danger-zone {
+        border: 2px solid #dc3545;
+        border-radius: 10px;
+        padding: 20px;
+        background: rgba(220, 53, 69, 0.05);
+    }
+
+    /* Account Info Styling */
+    .account-info-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 3px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .info-item:hover {
+        background: #e9ecef;
+        border-left-color: #007bff;
+        transform: translateX(5px);
+    }
+
+    .info-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-right: 8px;
+        min-width: 120px;
+    }
+
+    .info-value {
+        color: #495057;
+        font-size: 0.95rem;
+    }
+
+    /* Logout Button Styling */
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .account-info-grid {
+            gap: 8px;
+        }
+
+        .info-item {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+        }
+
+        .info-label {
+            min-width: auto;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            margin-right: 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <div class="settings-container">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="h3 mb-1">
+                    <i class="fas fa-cog me-2"></i>
+                    {% trans "الإعدادات" %}
+                </h1>
+                <p class="text-muted mb-0">{% trans "تخصيص تجربتك في استخدام التطبيق" %}</p>
+            </div>
+        </div>
+
+        <form method="post" id="settingsForm">
+            {% csrf_token %}
+
+            <!-- Account Settings -->
+            <div class="settings-section">
+                <h4 class="section-title">
+                    <i class="fas fa-user me-2"></i>
+                    {% trans "إعدادات الحساب" %}
+                </h4>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-title">{% trans "تسجيل الخروج" %}</div>
+                        <div class="setting-description">{% trans "تسجيل الخروج من حسابك الحالي" %}</div>
+                    </div>
+                    <div class="setting-control">
+                        <button type="button" class="btn btn-outline-danger" onclick="confirmLogout()">
+                            <i class="fas fa-sign-out-alt me-2"></i>
+                            {% trans "تسجيل الخروج" %}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-title">{% trans "معلومات الحساب" %}</div>
+                        <div class="setting-description">
+                            <div class="account-info-grid">
+                                <div class="info-item">
+                                    <i class="fas fa-user text-primary me-2"></i>
+                                    <span class="info-label">{% trans "اسم المستخدم" %}:</span>
+                                    <strong class="info-value">{{ user.username }}</strong>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-envelope text-success me-2"></i>
+                                    <span class="info-label">{% trans "البريد الإلكتروني" %}:</span>
+                                    <strong class="info-value">{{ user.email }}</strong>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-calendar text-info me-2"></i>
+                                    <span class="info-label">{% trans "تاريخ الانضمام" %}:</span>
+                                    <strong class="info-value">{{ user.date_joined|date:"d/m/Y" }}</strong>
+                                </div>
+                                {% if user.first_name or user.last_name %}
+                                <div class="info-item">
+                                    <i class="fas fa-id-card text-warning me-2"></i>
+                                    <span class="info-label">{% trans "الاسم الكامل" %}:</span>
+                                    <strong class="info-value">{{ user.first_name }} {{ user.last_name }}</strong>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-control">
+                        <a href="{% url 'accounts:edit_profile' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-edit me-2"></i>
+                            {% trans "تحرير الملف الشخصي" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="settings-section">
+                <h4 class="section-title">
+                    <i class="fas fa-bell me-2"></i>
+                    {% trans "إعدادات الإشعارات" %}
+                </h4>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-title">{% trans "تفعيل الإشعارات" %}</div>
+                        <div class="setting-description">{% trans "استقبال إشعارات حول المهام والتذكيرات" %}</div>
+                    </div>
+                    <div class="setting-control">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="notifications_enabled" 
+                                   id="notificationsEnabled" {% if user.notifications_enabled %}checked{% endif %}>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-title">{% trans "إشعارات البريد الإلكتروني" %}</div>
+                        <div class="setting-description">{% trans "استقبال إشعارات عبر البريد الإلكتروني" %}</div>
+                    </div>
+                    <div class="setting-control">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="email_notifications" 
+                                   id="emailNotifications" {% if user.email_notifications %}checked{% endif %}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Settings -->
+            <div class="settings-section">
+                <h4 class="section-title">
+                    <i class="fas fa-shield-alt me-2"></i>
+                    {% trans "الخصوصية والأمان" %}
+                </h4>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-title">{% trans "تغيير كلمة المرور" %}</div>
+                        <div class="setting-description">{% trans "قم بتحديث كلمة المرور لحسابك" %}</div>
+                    </div>
+                    <div class="setting-control">
+                        <button type="button" class="btn btn-outline-primary" onclick="changePassword()">
+                            <i class="fas fa-key me-2"></i>
+                            {% trans "تغيير" %}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-title">{% trans "تصدير البيانات" %}</div>
+                        <div class="setting-description">{% trans "تحميل نسخة من جميع بياناتك" %}</div>
+                    </div>
+                    <div class="setting-control">
+                        <button type="button" class="btn btn-outline-info" onclick="exportData()">
+                            <i class="fas fa-download me-2"></i>
+                            {% trans "تصدير" %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="settings-section">
+                <h4 class="section-title">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    {% trans "إحصائياتك" %}
+                </h4>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">{{ user.total_tasks }}</div>
+                        <div class="text-muted">{% trans "إجمالي المهام" %}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ user.completed_tasks }}</div>
+                        <div class="text-muted">{% trans "مهام مكتملة" %}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ user.completion_rate }}%</div>
+                        <div class="text-muted">{% trans "معدل الإنجاز" %}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ user.date_joined|timesince }}</div>
+                        <div class="text-muted">{% trans "عضو منذ" %}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="settings-section">
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-2"></i>
+                        {% trans "حفظ الإعدادات" %}
+                    </button>
+                    
+                    <button type="button" class="btn btn-outline-secondary" onclick="resetSettings()">
+                        <i class="fas fa-undo me-2"></i>
+                        {% trans "إعادة تعيين" %}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="settings-section">
+                <div class="danger-zone">
+                    <h5 class="text-danger mb-3">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        {% trans "منطقة الخطر" %}
+                    </h5>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <div class="setting-title text-danger">{% trans "حذف الحساب" %}</div>
+                            <div class="setting-description">{% trans "حذف حسابك وجميع بياناتك نهائياً" %}</div>
+                        </div>
+                        <div class="setting-control">
+                            <button type="button" class="btn btn-danger" onclick="deleteAccount()">
+                                <i class="fas fa-trash me-2"></i>
+                                {% trans "حذف الحساب" %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans "تغيير كلمة المرور" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="passwordForm">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "كلمة المرور الحالية" %}</label>
+                        <input type="password" class="form-control" name="current_password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "كلمة المرور الجديدة" %}</label>
+                        <input type="password" class="form-control" name="new_password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "تأكيد كلمة المرور الجديدة" %}</label>
+                        <input type="password" class="form-control" name="confirm_password" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    {% trans "إلغاء" %}
+                </button>
+                <button type="button" class="btn btn-primary" onclick="submitPasswordChange()">
+                    {% trans "تغيير كلمة المرور" %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+// Confirm logout
+function confirmLogout() {
+    if (confirm('{% trans "هل أنت متأكد من تسجيل الخروج؟" %}')) {
+        window.location.href = '{% url "accounts:logout" %}';
+    }
+}
+
+// Change password
+function changePassword() {
+    const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
+    modal.show();
+}
+
+// Submit password change
+function submitPasswordChange() {
+    const form = document.getElementById('passwordForm');
+    const formData = new FormData(form);
+    
+    // Add validation
+    const newPassword = formData.get('new_password');
+    const confirmPassword = formData.get('confirm_password');
+    
+    if (newPassword !== confirmPassword) {
+        alert('كلمات المرور غير متطابقة');
+        return;
+    }
+    
+    if (newPassword.length < 8) {
+        alert('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+        return;
+    }
+    
+    // Here you would send the request to change password
+    alert('تم تغيير كلمة المرور بنجاح');
+    bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
+}
+
+// Export data
+function exportData() {
+    if (confirm('هل تريد تصدير جميع بياناتك؟')) {
+        // Create a download link for user data
+        const data = {
+            user: {
+                username: '{{ user.username }}',
+                email: '{{ user.email }}',
+                total_tasks: {{ user.total_tasks }},
+                completed_tasks: {{ user.completed_tasks }},
+                date_joined: '{{ user.date_joined|date:"c" }}'
+            }
+        };
+        
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'my_data.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+}
+
+// Reset settings
+function resetSettings() {
+    if (confirm('هل تريد إعادة تعيين جميع الإعدادات؟')) {
+        location.reload();
+    }
+}
+
+// Delete account
+function deleteAccount() {
+    const confirmation = prompt('لحذف حسابك، اكتب "حذف حسابي" في المربع أدناه:');
+    
+    if (confirmation === 'حذف حسابي') {
+        if (confirm('هل أنت متأكد؟ هذا الإجراء لا يمكن التراجع عنه!')) {
+            alert('ميزة حذف الحساب ستكون متاحة قريباً');
+        }
+    } else if (confirmation !== null) {
+        alert('النص المدخل غير صحيح');
+    }
+}
+
+// Form submission
+document.getElementById('settingsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+
+    // تغيير نص الزر أثناء الحفظ
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري الحفظ...';
+    submitBtn.disabled = true;
+
+    fetch('{% url "accounts:settings" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // إظهار رسالة نجاح
+            showNotification('تم حفظ الإعدادات بنجاح', 'success');
+        } else {
+            showNotification(data.message || 'حدث خطأ في حفظ الإعدادات', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('حدث خطأ في الاتصال', 'error');
+    })
+    .finally(() => {
+        // إعادة تعيين الزر
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+});
+
+// دالة إظهار الإشعارات
+function showNotification(message, type = 'info') {
+    // إنشاء عنصر الإشعار
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} alert-dismissible fade show position-fixed`;
+    notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+
+    // إضافة الإشعار للصفحة
+    document.body.appendChild(notification);
+
+    // إزالة الإشعار تلقائياً بعد 5 ثوان
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+
+
+// Auto-save on change
+document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        // Auto-save checkbox changes
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        formData.append(this.name, this.checked ? 'on' : '');
+
+        fetch('{% url "accounts:settings" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('تم حفظ الإعداد تلقائياً', 'success');
+            }
+        })
+        .catch(error => {
+            console.error('Auto-save error:', error);
+        });
+    });
+});
+
+
+</script>
+{% endblock %}

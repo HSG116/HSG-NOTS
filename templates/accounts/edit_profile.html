@@ -1,0 +1,485 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block title %}{% trans "تحرير الملف الشخصي" %} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-color);
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(37, 211, 102, 0.25);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+    }
+
+    .btn-secondary {
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+    }
+
+    .avatar-preview {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--primary-color);
+    }
+
+    /* مؤشر الحفظ التلقائي */
+    .auto-save-indicator {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+        padding: 10px 15px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .auto-save-indicator.saving {
+        background: #ffc107;
+        color: #000;
+        display: flex;
+    }
+
+    .auto-save-indicator.saved {
+        background: #28a745;
+        color: white;
+        display: flex;
+    }
+
+    .auto-save-indicator.error {
+        background: #dc3545;
+        color: white;
+        display: flex;
+    }
+
+    .form-control.auto-saving {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+    }
+
+    .form-control.auto-saved {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    .form-control.auto-error {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<!-- مؤشر الحفظ التلقائي -->
+<div class="auto-save-indicator" id="autoSaveIndicator">
+    <i class="fas fa-spinner fa-spin" id="saveIcon"></i>
+    <span id="saveText">جاري الحفظ...</span>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="form-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>
+                        <i class="fas fa-user-edit me-2"></i>
+                        {% trans "تحرير الملف الشخصي" %}
+                    </h3>
+                    <a href="{% url 'accounts:profile' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        {% trans "العودة" %}
+                    </a>
+                </div>
+
+                <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate id="profileForm">
+                    {% csrf_token %}
+                    
+                    <!-- الصورة الشخصية -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 text-center">
+                            <div class="mb-3">
+                                {% if user.avatar %}
+                                    <img src="{{ user.avatar.url }}" alt="الصورة الشخصية" class="avatar-preview" id="avatarPreview">
+                                {% else %}
+                                    <div class="avatar-preview bg-light d-flex align-items-center justify-content-center mx-auto" id="avatarPreview">
+                                        <i class="fas fa-user fa-2x text-muted"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <label for="{{ form.avatar.id_for_label }}" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-camera me-1"></i>
+                                {% trans "تغيير الصورة" %}
+                            </label>
+                            {{ form.avatar|add_class:"d-none" }}
+                        </div>
+                        <div class="col-md-9">
+                            <h5>{% trans "الصورة الشخصية" %}</h5>
+                            <p class="text-muted">{% trans "اختر صورة شخصية واضحة. الحد الأقصى 5 ميجابايت." %}</p>
+                            {% if form.avatar.errors %}
+                                <div class="text-danger">
+                                    {{ form.avatar.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- المعلومات الأساسية -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                                <i class="fas fa-user me-2"></i>
+                                {% trans "الاسم الأول" %}
+                            </label>
+                            {{ form.first_name|add_class:"form-control" }}
+                            {% if form.first_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.first_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                                <i class="fas fa-user me-2"></i>
+                                {% trans "الاسم الأخير" %}
+                            </label>
+                            {{ form.last_name|add_class:"form-control" }}
+                            {% if form.last_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.last_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                <i class="fas fa-envelope me-2"></i>
+                                {% trans "البريد الإلكتروني" %}
+                            </label>
+                            {{ form.email|add_class:"form-control" }}
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.email.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.phone.id_for_label }}" class="form-label">
+                                <i class="fas fa-phone me-2"></i>
+                                {% trans "رقم الهاتف" %}
+                            </label>
+                            {{ form.phone|add_class:"form-control" }}
+                            {% if form.phone.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.phone.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- النبذة الشخصية -->
+                    <div class="mb-3">
+                        <label for="{{ form.bio.id_for_label }}" class="form-label">
+                            <i class="fas fa-info-circle me-2"></i>
+                            {% trans "نبذة شخصية" %}
+                        </label>
+                        {{ form.bio|add_class:"form-control" }}
+                        <div class="form-text">{% trans "اكتب نبذة مختصرة عن نفسك" %}</div>
+                        {% if form.bio.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.bio.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">
+                                <i class="fas fa-birthday-cake me-2"></i>
+                                {% trans "تاريخ الميلاد" %}
+                            </label>
+                            {{ form.date_of_birth|add_class:"form-control" }}
+                            {% if form.date_of_birth.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.date_of_birth.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.location.id_for_label }}" class="form-label">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                {% trans "الموقع" %}
+                            </label>
+                            {{ form.location|add_class:"form-control" }}
+                            {% if form.location.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.location.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- الإعدادات -->
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.theme.id_for_label }}" class="form-label">
+                                <i class="fas fa-palette me-2"></i>
+                                {% trans "المظهر" %}
+                            </label>
+                            {{ form.theme|add_class:"form-control" }}
+                            {% if form.theme.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.theme.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- الإشعارات -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-check">
+                                {{ form.notifications_enabled|add_class:"form-check-input" }}
+                                <label class="form-check-label" for="{{ form.notifications_enabled.id_for_label }}">
+                                    <i class="fas fa-bell me-2"></i>
+                                    {% trans "تفعيل الإشعارات" %}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-check">
+                                {{ form.email_notifications|add_class:"form-check-input" }}
+                                <label class="form-check-label" for="{{ form.email_notifications.id_for_label }}">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    {% trans "إشعارات البريد الإلكتروني" %}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- أزرار الحفظ -->
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% url 'accounts:profile' %}" class="btn btn-secondary">
+                            <i class="fas fa-times me-2"></i>
+                            {% trans "إلغاء" %}
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>
+                            {% trans "حفظ التغييرات" %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // عناصر الحفظ التلقائي
+    const form = document.getElementById('profileForm');
+    const indicator = document.getElementById('autoSaveIndicator');
+    const saveIcon = document.getElementById('saveIcon');
+    const saveText = document.getElementById('saveText');
+
+    // متغيرات للحفظ التلقائي
+    let autoSaveTimeout;
+    let isAutoSaving = false;
+
+    // دالة إظهار مؤشر الحفظ
+    function showSaveIndicator(type, message, iconClass) {
+        indicator.className = `auto-save-indicator ${type}`;
+        saveIcon.className = iconClass;
+        saveText.textContent = message;
+
+        if (type === 'saved') {
+            setTimeout(() => {
+                indicator.classList.remove('saved');
+            }, 2000);
+        }
+    }
+
+    // دالة الحفظ التلقائي
+    function autoSave(changedField) {
+        if (isAutoSaving) return;
+
+        isAutoSaving = true;
+        showSaveIndicator('saving', 'جاري الحفظ...', 'fas fa-spinner fa-spin');
+
+        // إضافة كلاس للحقل المتغير
+        if (changedField) {
+            changedField.classList.add('auto-saving');
+            changedField.classList.remove('auto-saved', 'auto-error');
+        }
+
+        const formData = new FormData(form);
+
+        fetch('{% url "accounts:edit_profile" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                showSaveIndicator('saved', 'تم الحفظ تلقائياً', 'fas fa-check');
+
+                // إضافة كلاس النجاح للحقل
+                if (changedField) {
+                    changedField.classList.remove('auto-saving');
+                    changedField.classList.add('auto-saved');
+
+                    // إزالة كلاس النجاح بعد ثانيتين
+                    setTimeout(() => {
+                        changedField.classList.remove('auto-saved');
+                    }, 2000);
+                }
+            } else {
+                throw new Error(data.message || 'حدث خطأ في الحفظ');
+            }
+        })
+        .catch(error => {
+            console.error('Auto-save error:', error);
+            showSaveIndicator('error', 'فشل في الحفظ', 'fas fa-exclamation-triangle');
+
+            // إضافة كلاس الخطأ للحقل
+            if (changedField) {
+                changedField.classList.remove('auto-saving');
+                changedField.classList.add('auto-error');
+
+                // إزالة كلاس الخطأ بعد 3 ثوان
+                setTimeout(() => {
+                    changedField.classList.remove('auto-error');
+                }, 3000);
+            }
+        })
+        .finally(() => {
+            isAutoSaving = false;
+        });
+    }
+
+    // إضافة مستمعي الأحداث للحقول
+    const autoSaveFields = form.querySelectorAll('input:not([type="file"]), select, textarea');
+
+    autoSaveFields.forEach(field => {
+        let originalValue = field.value;
+
+        // للحقول النصية
+        if (field.type === 'text' || field.type === 'email' || field.type === 'tel' || field.tagName === 'TEXTAREA') {
+            field.addEventListener('input', function() {
+                clearTimeout(autoSaveTimeout);
+                autoSaveTimeout = setTimeout(() => {
+                    if (this.value !== originalValue) {
+                        autoSave(this);
+                        originalValue = this.value;
+                    }
+                }, 1000); // انتظار ثانية واحدة بعد التوقف عن الكتابة
+            });
+        }
+
+        // للقوائم المنسدلة والتواريخ
+        if (field.type === 'select-one' || field.type === 'date') {
+            field.addEventListener('change', function() {
+                if (this.value !== originalValue) {
+                    autoSave(this);
+                    originalValue = this.value;
+                }
+            });
+        }
+
+        // لصناديق الاختيار
+        if (field.type === 'checkbox') {
+            field.addEventListener('change', function() {
+                autoSave(this);
+            });
+        }
+    });
+
+    // معاينة الصورة الشخصية
+    const avatarInput = document.getElementById('{{ form.avatar.id_for_label }}');
+    const avatarPreview = document.getElementById('avatarPreview');
+
+    if (avatarInput) {
+        avatarInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // معاينة الصورة
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (avatarPreview.tagName === 'IMG') {
+                        avatarPreview.src = e.target.result;
+                    } else {
+                        avatarPreview.innerHTML = `<img src="${e.target.result}" alt="معاينة الصورة" class="avatar-preview">`;
+                    }
+                };
+                reader.readAsDataURL(file);
+
+                // حفظ تلقائي للصورة
+                setTimeout(() => {
+                    autoSave(this);
+                }, 500);
+            }
+        });
+    }
+
+    // منع الإرسال العادي للنموذج إذا كان هناك حفظ تلقائي
+    form.addEventListener('submit', function(e) {
+        if (isAutoSaving) {
+            e.preventDefault();
+            showSaveIndicator('saving', 'جاري إنهاء الحفظ...', 'fas fa-spinner fa-spin');
+
+            // انتظار انتهاء الحفظ التلقائي ثم إرسال النموذج
+            const checkSaving = setInterval(() => {
+                if (!isAutoSaving) {
+                    clearInterval(checkSaving);
+                    this.submit();
+                }
+            }, 100);
+        }
+    });
+});
+</script>
+{% endblock %}

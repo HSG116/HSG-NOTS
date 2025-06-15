@@ -1,0 +1,959 @@
+INFO 2025-06-05 02:41:45,468 autoreload 11824 12152 Watching for file changes with StatReloader
+INFO 2025-06-05 02:41:45,482 autoreload 6844 12908 Watching for file changes with StatReloader
+INFO 2025-06-05 02:41:46,341 autoreload 992 15356 Watching for file changes with StatReloader
+INFO 2025-06-05 02:42:16,694 autoreload 6844 12908 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:42:16,700 autoreload 11824 12152 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:42:16,797 autoreload 992 15356 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:42:18,459 autoreload 4248 2304 Watching for file changes with StatReloader
+INFO 2025-06-05 02:42:18,499 autoreload 15180 8980 Watching for file changes with StatReloader
+INFO 2025-06-05 02:42:18,637 autoreload 5564 7736 Watching for file changes with StatReloader
+ERROR 2025-06-05 02:43:10,419 log 15180 15068 Internal Server Error: /tasks/
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\tasks\views.py", line 63, in dashboard_view
+    return render(request, 'tasks/dashboard.html', context)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'manifest' not found. 'manifest' is not a valid view function or pattern name.
+ERROR 2025-06-05 02:43:10,430 basehttp 15180 15068 "GET /tasks/ HTTP/1.1" 500 166040
+ERROR 2025-06-05 02:43:15,044 log 15180 15068 Internal Server Error: /tasks/
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\tasks\views.py", line 63, in dashboard_view
+    return render(request, 'tasks/dashboard.html', context)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'manifest' not found. 'manifest' is not a valid view function or pattern name.
+ERROR 2025-06-05 02:43:15,052 basehttp 15180 15068 "GET /tasks/ HTTP/1.1" 500 165910
+INFO 2025-06-05 02:43:30,267 autoreload 5564 7736 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:43:30,271 autoreload 15180 8980 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:43:30,669 autoreload 4248 2304 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:43:31,813 autoreload 11444 14404 Watching for file changes with StatReloader
+INFO 2025-06-05 02:43:31,816 autoreload 12560 3532 Watching for file changes with StatReloader
+INFO 2025-06-05 02:43:32,307 autoreload 2576 8996 Watching for file changes with StatReloader
+INFO 2025-06-05 02:43:56,143 autoreload 12560 3532 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:43:56,483 autoreload 2576 8996 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:43:56,529 autoreload 11444 14404 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:43:57,982 autoreload 11556 13172 Watching for file changes with StatReloader
+INFO 2025-06-05 02:43:58,479 autoreload 12648 3288 Watching for file changes with StatReloader
+INFO 2025-06-05 02:43:58,497 autoreload 4924 9104 Watching for file changes with StatReloader
+INFO 2025-06-05 02:44:12,692 autoreload 12648 3288 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:44:13,177 autoreload 11556 13172 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:44:13,218 autoreload 4924 9104 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:44:14,244 autoreload 7192 12908 Watching for file changes with StatReloader
+INFO 2025-06-05 02:44:14,883 autoreload 9480 3592 Watching for file changes with StatReloader
+INFO 2025-06-05 02:44:14,952 autoreload 11928 8320 Watching for file changes with StatReloader
+INFO 2025-06-05 02:45:11,504 autoreload 12928 1872 Watching for file changes with StatReloader
+INFO 2025-06-05 02:45:29,302 basehttp 11928 6468 "GET /about/ HTTP/1.1" 200 79277
+INFO 2025-06-05 02:45:30,337 basehttp 11928 212 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:45:44,071 basehttp 11928 6468 "GET /tasks/create/ HTTP/1.1" 200 88800
+INFO 2025-06-05 02:45:44,387 basehttp 11928 212 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:46:04,135 basehttp 11928 6468 "GET /accounts/settings/ HTTP/1.1" 200 80998
+INFO 2025-06-05 02:46:04,282 basehttp 11928 212 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:46:08,917 basehttp 11928 6468 "GET /about/ HTTP/1.1" 200 79277
+INFO 2025-06-05 02:46:09,182 basehttp 11928 212 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:46:13,541 autoreload 11928 8320 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:46:14,181 autoreload 12928 1872 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:46:15,562 autoreload 7096 11556 Watching for file changes with StatReloader
+INFO 2025-06-05 02:46:15,940 autoreload 8696 8548 Watching for file changes with StatReloader
+INFO 2025-06-05 02:46:28,184 basehttp 7096 5288 "GET /accounts/signup/ HTTP/1.1" 200 21820
+INFO 2025-06-05 02:46:29,262 autoreload 8696 8548 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:46:29,825 autoreload 7096 11556 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:46:31,099 autoreload 11596 10700 Watching for file changes with StatReloader
+INFO 2025-06-05 02:46:31,940 autoreload 2608 8788 Watching for file changes with StatReloader
+INFO 2025-06-05 02:46:53,444 autoreload 2608 8788 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:46:53,578 autoreload 11596 10700 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 02:46:55,231 autoreload 2492 5580 Watching for file changes with StatReloader
+INFO 2025-06-05 02:46:55,484 autoreload 3592 11984 Watching for file changes with StatReloader
+INFO 2025-06-05 02:46:57,562 basehttp 2492 11536 "GET /tasks/ HTTP/1.1" 200 80775
+INFO 2025-06-05 02:46:57,953 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:02,931 basehttp 2492 11536 "GET /about/ HTTP/1.1" 200 79277
+INFO 2025-06-05 02:47:03,091 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:15,954 basehttp 2492 11536 "GET /about/ HTTP/1.1" 200 79277
+INFO 2025-06-05 02:47:16,129 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:17,633 basehttp 2492 11536 "GET /about/ HTTP/1.1" 200 79277
+INFO 2025-06-05 02:47:17,811 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:19,476 basehttp 2492 11536 "GET /tasks/ HTTP/1.1" 200 80775
+INFO 2025-06-05 02:47:19,639 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:20,425 basehttp 2492 11536 "GET /tasks/list/ HTTP/1.1" 200 95477
+INFO 2025-06-05 02:47:20,640 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:21,096 basehttp 2492 11536 "GET /tasks/create/ HTTP/1.1" 200 88800
+INFO 2025-06-05 02:47:21,304 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:22,073 basehttp 2492 11536 "GET /tasks/calendar/ HTTP/1.1" 200 103241
+INFO 2025-06-05 02:47:22,359 basehttp 2492 11536 "GET /tasks/api/tasks/ HTTP/1.1" 200 2
+INFO 2025-06-05 02:47:22,748 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:23,013 basehttp 2492 11536 "GET /ai/chat/ HTTP/1.1" 200 163798
+INFO 2025-06-05 02:47:23,230 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:23,973 basehttp 2492 11536 "GET /tasks/calendar/ HTTP/1.1" 200 103241
+INFO 2025-06-05 02:47:24,261 basehttp 2492 11536 "GET /tasks/api/tasks/ HTTP/1.1" 200 2
+INFO 2025-06-05 02:47:24,511 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:31,071 basehttp 2492 11536 "GET /ai/chat/ HTTP/1.1" 200 163798
+INFO 2025-06-05 02:47:31,246 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:47:44,790 basehttp 2492 11536 "POST /ai/api/send-message/ HTTP/1.1" 200 11812
+INFO 2025-06-05 02:47:52,561 basehttp 2492 11536 "GET /ai/chat/38/ HTTP/1.1" 200 212573
+INFO 2025-06-05 02:47:52,838 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:48:00,913 basehttp 2492 11536 "GET /ai/chat/ HTTP/1.1" 200 163867
+INFO 2025-06-05 02:48:01,086 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:48:08,365 basehttp 2492 11536 "POST /ai/api/send-message/ HTTP/1.1" 200 10558
+INFO 2025-06-05 02:48:20,005 basehttp 2492 11536 "GET /about/ HTTP/1.1" 200 79277
+INFO 2025-06-05 02:48:20,171 basehttp 2492 5812 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:55:16,938 basehttp 2492 12380 "GET /about/ HTTP/1.1" 200 85692
+INFO 2025-06-05 02:55:17,438 basehttp 2492 12900 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:55:18,441 autoreload 2492 5580 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\context_processors.py changed, reloading.
+INFO 2025-06-05 02:55:20,734 autoreload 14848 12076 Watching for file changes with StatReloader
+INFO 2025-06-05 02:55:21,031 basehttp 3592 588 "GET /about/ HTTP/1.1" 200 85692
+INFO 2025-06-05 02:55:21,164 basehttp 3592 4092 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 02:55:36,724 autoreload 3592 11984 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:55:37,327 autoreload 14848 12076 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-05 02:55:38,984 autoreload 15108 13088 Watching for file changes with StatReloader
+INFO 2025-06-05 02:55:39,494 autoreload 8592 12936 Watching for file changes with StatReloader
+INFO 2025-06-05 02:58:18,882 basehttp 8592 12580 "GET /about/ HTTP/1.1" 200 86109
+INFO 2025-06-05 02:58:19,621 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:02:43,291 basehttp 8592 12580 "GET /about/ HTTP/1.1" 200 88652
+INFO 2025-06-05 03:02:43,589 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:02:45,252 basehttp 8592 12580 "GET /about/ HTTP/1.1" 200 88652
+INFO 2025-06-05 03:02:45,391 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:02:46,274 basehttp 8592 12580 "GET /tasks/create/ HTTP/1.1" 200 89333
+INFO 2025-06-05 03:02:46,477 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:02:48,236 basehttp 8592 12580 "GET /tasks/list/ HTTP/1.1" 200 96027
+INFO 2025-06-05 03:02:48,365 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:02:52,229 basehttp 8592 12580 "GET /tasks/ HTTP/1.1" 200 81342
+INFO 2025-06-05 03:02:52,336 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:02:57,929 basehttp 8592 12580 "GET /tasks/create/ HTTP/1.1" 200 89333
+INFO 2025-06-05 03:02:58,065 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:03:04,208 basehttp 8592 12580 "GET /accounts/settings/ HTTP/1.1" 200 81531
+INFO 2025-06-05 03:03:04,345 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:03:12,636 basehttp 8592 12580 "GET /accounts/settings/ HTTP/1.1" 200 81531
+INFO 2025-06-05 03:03:12,766 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:03:15,193 basehttp 8592 12580 "GET /about/ HTTP/1.1" 200 90600
+INFO 2025-06-05 03:03:15,359 basehttp 8592 7736 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:04:42,335 basehttp 8592 4680 "GET /about/ HTTP/1.1" 200 94792
+INFO 2025-06-05 03:04:42,821 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:05:15,810 basehttp 8592 4680 "GET /about/ HTTP/1.1" 200 95439
+INFO 2025-06-05 03:05:16,171 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:07:01,368 basehttp 8592 4680 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-05 03:07:01,952 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:07:28,417 basehttp 8592 4680 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-05 03:07:28,679 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:07:36,893 basehttp 8592 4680 "GET /accounts/signup/ HTTP/1.1" 200 21820
+INFO 2025-06-05 03:07:40,687 basehttp 8592 4680 "GET /tasks/ HTTP/1.1" 200 81342
+INFO 2025-06-05 03:07:40,802 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:07:44,404 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 81531
+INFO 2025-06-05 03:07:44,554 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:40,688 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:40,872 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:41,889 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:41,997 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:42,457 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:42,569 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:42,861 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:42,962 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:43,048 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:43,141 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:43,193 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:43,299 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:43,497 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:43,618 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:43,799 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:43,965 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80513
+INFO 2025-06-05 03:08:43,972 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:44,104 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:50,272 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:50,381 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:50,807 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:50,906 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:50,987 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:51,097 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:51,141 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:51,260 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:51,392 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:51,531 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:51,650 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:51,761 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:51,843 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:51,976 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:52,161 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:52,263 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:52,317 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:52,510 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:52,536 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:52,644 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:52,689 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:52,848 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:53,025 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:53,130 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:53,205 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:53,310 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:53,557 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:53,676 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:53,733 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:53,851 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:53,927 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:54,055 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:54,089 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:54,243 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:54,401 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:54,488 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:54,611 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:54,730 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:54,945 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:55,052 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:08:55,151 basehttp 8592 4680 "GET /accounts/settings/ HTTP/1.1" 200 80342
+INFO 2025-06-05 03:08:55,260 basehttp 8592 3848 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:09:18,702 autoreload 8592 12936 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\views.py changed, reloading.
+INFO 2025-06-05 03:09:18,751 autoreload 15108 13088 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\views.py changed, reloading.
+INFO 2025-06-05 03:09:20,253 autoreload 3312 240 Watching for file changes with StatReloader
+INFO 2025-06-05 03:09:20,280 autoreload 7676 7672 Watching for file changes with StatReloader
+INFO 2025-06-05 03:09:25,677 basehttp 3312 9576 "GET /accounts/settings/ HTTP/1.1" 200 79559
+INFO 2025-06-05 03:09:25,788 basehttp 3312 10508 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:09:26,278 basehttp 3312 9576 "GET /accounts/settings/ HTTP/1.1" 200 79559
+INFO 2025-06-05 03:09:26,528 basehttp 3312 10508 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:09:31,999 autoreload 3312 240 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\views.py changed, reloading.
+INFO 2025-06-05 03:09:32,007 autoreload 7676 7672 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\views.py changed, reloading.
+INFO 2025-06-05 03:09:33,409 autoreload 356 12336 Watching for file changes with StatReloader
+INFO 2025-06-05 03:09:33,437 autoreload 13592 5068 Watching for file changes with StatReloader
+INFO 2025-06-05 03:09:46,476 autoreload 356 12336 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\views.py changed, reloading.
+INFO 2025-06-05 03:09:46,966 autoreload 13592 5068 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\views.py changed, reloading.
+INFO 2025-06-05 03:09:47,869 autoreload 10524 11376 Watching for file changes with StatReloader
+INFO 2025-06-05 03:09:48,406 autoreload 4524 13472 Watching for file changes with StatReloader
+INFO 2025-06-05 03:10:17,556 autoreload 10524 11376 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:10:17,601 autoreload 4524 13472 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:10:19,035 autoreload 8844 1584 Watching for file changes with StatReloader
+INFO 2025-06-05 03:10:19,265 autoreload 10996 7352 Watching for file changes with StatReloader
+INFO 2025-06-05 03:10:32,051 autoreload 8844 1584 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:10:32,581 autoreload 10996 7352 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:10:33,344 autoreload 11396 14388 Watching for file changes with StatReloader
+INFO 2025-06-05 03:10:34,091 autoreload 3780 10644 Watching for file changes with StatReloader
+INFO 2025-06-05 03:11:02,222 autoreload 3780 10644 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:11:02,246 autoreload 11396 14388 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:11:04,177 autoreload 5240 12936 Watching for file changes with StatReloader
+INFO 2025-06-05 03:11:04,228 autoreload 4584 15352 Watching for file changes with StatReloader
+INFO 2025-06-05 03:11:05,288 basehttp 5240 12032 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-05 03:11:05,709 basehttp 5240 5428 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:11:09,510 basehttp 5240 12032 "GET /accounts/settings/ HTTP/1.1" 200 79559
+INFO 2025-06-05 03:11:09,670 basehttp 5240 5428 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:11:15,873 autoreload 5240 12936 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:11:16,155 autoreload 4584 15352 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:11:17,455 autoreload 11588 13580 Watching for file changes with StatReloader
+INFO 2025-06-05 03:11:17,641 autoreload 15260 12440 Watching for file changes with StatReloader
+INFO 2025-06-05 03:11:30,876 autoreload 15260 12440 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:11:31,157 autoreload 11588 13580 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:11:32,451 autoreload 9576 7612 Watching for file changes with StatReloader
+INFO 2025-06-05 03:11:32,785 autoreload 8548 7676 Watching for file changes with StatReloader
+INFO 2025-06-05 03:11:42,308 basehttp 8548 14736 "GET /accounts/settings/ HTTP/1.1" 200 79559
+INFO 2025-06-05 03:11:42,845 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:11:58,679 basehttp 8548 14736 "GET /accounts/signup/ HTTP/1.1" 200 21367
+INFO 2025-06-05 03:12:44,942 basehttp 8548 14736 "GET /accounts/settings/ HTTP/1.1" 200 79258
+INFO 2025-06-05 03:12:45,571 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:13:58,108 basehttp 8548 14736 "GET /accounts/settings/ HTTP/1.1" 200 79258
+INFO 2025-06-05 03:13:58,348 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:14:14,978 basehttp 8548 14736 "GET /accounts/settings/ HTTP/1.1" 200 79258
+INFO 2025-06-05 03:14:15,191 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:14:20,376 basehttp 8548 14736 "GET /accounts/profile/ HTTP/1.1" 200 71348
+INFO 2025-06-05 03:14:20,462 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:14:24,623 basehttp 8548 14736 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-05 03:14:24,774 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:14:28,200 basehttp 8548 14736 "GET /accounts/signup/ HTTP/1.1" 200 21367
+INFO 2025-06-05 03:14:56,214 basehttp 8548 14736 "POST /accounts/signup/ HTTP/1.1" 200 21932
+INFO 2025-06-05 03:14:56,251 basehttp 8548 14736 "GET /accounts/signup/ HTTP/1.1" 200 21367
+INFO 2025-06-05 03:15:01,579 basehttp 8548 14736 "GET /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-06-05 03:15:01,633 basehttp 8548 14736 "GET /tasks/ HTTP/1.1" 200 81342
+INFO 2025-06-05 03:15:01,775 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:15:15,434 basehttp 8548 14736 "GET / HTTP/1.1" 302 0
+INFO 2025-06-05 03:15:15,480 basehttp 8548 14736 "GET /tasks/ HTTP/1.1" 200 81342
+INFO 2025-06-05 03:15:15,602 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:15:17,365 basehttp 8548 14736 "GET / HTTP/1.1" 302 0
+INFO 2025-06-05 03:15:17,405 basehttp 8548 14736 "GET /tasks/ HTTP/1.1" 200 81342
+INFO 2025-06-05 03:15:17,539 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:15:19,911 basehttp 8548 14736 "GET /tasks/ HTTP/1.1" 200 81342
+INFO 2025-06-05 03:15:20,397 basehttp 8548 6372 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:15:30,800 basehttp 8548 11856 "GET /tasks/ HTTP/1.1" 302 0
+INFO 2025-06-05 03:15:30,816 basehttp 8548 11856 "GET /accounts/login/?next=/tasks/ HTTP/1.1" 200 6459
+INFO 2025-06-05 03:42:22,161 basehttp 8548 9180 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-06-05 03:42:22,170 basehttp 8548 9180 "GET /accounts/login/ HTTP/1.1" 200 6459
+INFO 2025-06-05 03:42:49,142 basehttp 8548 15388 "POST /accounts/login/?next=/tasks/ HTTP/1.1" 200 6653
+INFO 2025-06-05 03:43:13,523 basehttp 8548 15388 "POST /accounts/login/?next=/tasks/ HTTP/1.1" 302 0
+INFO 2025-06-05 03:43:13,585 basehttp 8548 15388 "GET /tasks/ HTTP/1.1" 200 81342
+INFO 2025-06-05 03:43:13,794 basehttp 8548 15388 "GET /media/avatars/%D8%B5%D9%88%D8%B1%D8%A9_%D9%88%D8%A7%D8%AA%D8%B3%D8%A7%D8%A8_%D8%A8%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE_1446-11-28_%D9%81%D9%8A_01.59.12_39ea9c29.jpg HTTP/1.1" 200 16203
+INFO 2025-06-05 03:43:14,307 basehttp 8548 3648 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:43:20,840 basehttp 8548 15388 "GET /tasks/list/ HTTP/1.1" 200 96027
+INFO 2025-06-05 03:43:21,074 basehttp 8548 3648 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:46:41,584 autoreload 9576 7612 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:46:41,685 autoreload 8548 7676 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:46:44,177 autoreload 11808 12088 Watching for file changes with StatReloader
+INFO 2025-06-05 03:46:44,379 autoreload 3508 13284 Watching for file changes with StatReloader
+INFO 2025-06-05 03:46:55,825 autoreload 11808 12088 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:46:56,350 autoreload 3508 13284 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:46:57,190 autoreload 10164 5560 Watching for file changes with StatReloader
+INFO 2025-06-05 03:46:57,933 autoreload 12928 10712 Watching for file changes with StatReloader
+INFO 2025-06-05 03:47:37,281 basehttp 10164 14484 "GET /accounts/settings/ HTTP/1.1" 302 0
+INFO 2025-06-05 03:47:37,326 basehttp 10164 14484 "GET /accounts/login/?next=/accounts/settings/ HTTP/1.1" 200 6683
+INFO 2025-06-05 03:47:45,530 basehttp 10164 14484 "GET /accounts/login/ HTTP/1.1" 200 6683
+INFO 2025-06-05 03:47:56,314 basehttp 10164 14484 "POST /accounts/login/ HTTP/1.1" 200 6867
+INFO 2025-06-05 03:48:00,049 basehttp 10164 14484 "GET /accounts/signup/ HTTP/1.1" 200 21367
+INFO 2025-06-05 03:48:50,919 basehttp 10164 14484 "POST /accounts/signup/ HTTP/1.1" 302 0
+INFO 2025-06-05 03:48:50,923 basehttp 10164 14484 "GET /tasks/ HTTP/1.1" 302 0
+INFO 2025-06-05 03:48:50,937 basehttp 10164 14484 "GET /accounts/login/?next=/tasks/ HTTP/1.1" 200 7101
+INFO 2025-06-05 03:48:50,974 basehttp 10164 14484 "GET /accounts/login/?next=/tasks/ HTTP/1.1" 200 6683
+INFO 2025-06-05 03:48:58,089 basehttp 10164 14484 "POST /accounts/login/?next=/tasks/ HTTP/1.1" 200 6869
+INFO 2025-06-05 03:49:07,183 basehttp 10164 14484 "GET /accounts/signup/ HTTP/1.1" 200 21367
+INFO 2025-06-05 03:49:10,183 basehttp 10164 14484 "GET /accounts/login/ HTTP/1.1" 200 6683
+INFO 2025-06-05 03:49:22,549 basehttp 10164 15996 "GET /tasks/list/ HTTP/1.1" 200 96034
+INFO 2025-06-05 03:49:23,116 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:49:26,036 basehttp 10164 15996 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-05 03:49:26,525 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:49:27,841 basehttp 10164 15996 "GET /ai/chat/ HTTP/1.1" 200 164474
+INFO 2025-06-05 03:49:28,143 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:49:28,995 basehttp 10164 15996 "GET /accounts/profile/ HTTP/1.1" 200 71355
+INFO 2025-06-05 03:49:29,241 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:49:36,152 basehttp 10164 15996 "GET /accounts/settings/ HTTP/1.1" 200 83988
+INFO 2025-06-05 03:49:36,860 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:49:53,995 basehttp 10164 15996 "GET /accounts/profile/edit/ HTTP/1.1" 200 79055
+INFO 2025-06-05 03:49:54,228 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:49:56,300 basehttp 10164 15996 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-05 03:49:56,847 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:49:58,088 basehttp 10164 15996 "GET /ai/chat/ HTTP/1.1" 200 164482
+INFO 2025-06-05 03:49:58,443 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:50:06,856 basehttp 10164 15996 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-05 03:50:07,047 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:50:11,553 basehttp 10164 15996 "GET /accounts/profile/ HTTP/1.1" 200 71351
+INFO 2025-06-05 03:50:11,761 basehttp 10164 16028 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-05 03:50:14,072 basehttp 10164 15996 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-06-05 03:50:14,085 basehttp 10164 15996 "GET /accounts/login/ HTTP/1.1" 200 6683
+INFO 2025-06-05 03:52:25,354 autoreload 10164 5560 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:52:25,438 autoreload 12928 10712 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-05 03:52:27,344 autoreload 1756 15376 Watching for file changes with StatReloader
+INFO 2025-06-05 03:52:27,414 autoreload 8720 3724 Watching for file changes with StatReloader
+INFO 2025-06-05 03:52:52,878 basehttp 8720 15652 "GET /accounts/login/ HTTP/1.1" 200 6667
+INFO 2025-06-05 03:53:29,369 basehttp 8720 15652 "GET /accounts/login/ HTTP/1.1" 200 6691
+INFO 2025-06-05 03:54:10,061 basehttp 8720 10124 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-05 03:54:10,828 basehttp 8720 10124 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-05 03:54:21,446 basehttp 8720 10124 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-05 03:54:29,741 basehttp 8720 10124 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-05 04:13:04,678 autoreload 8720 3724 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 04:13:08,341 autoreload 15364 5692 Watching for file changes with StatReloader
+INFO 2025-06-05 04:13:25,795 autoreload 8320 10620 Watching for file changes with StatReloader
+INFO 2025-06-05 04:14:09,525 basehttp 15364 9552 "GET / HTTP/1.1" 200 17025
+INFO 2025-06-05 04:14:23,979 autoreload 13288 16264 Watching for file changes with StatReloader
+INFO 2025-06-05 04:15:40,111 autoreload 15364 5692 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 04:15:41,273 autoreload 13288 16264 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-05 04:15:42,884 autoreload 16196 1008 Watching for file changes with StatReloader
+INFO 2025-06-05 04:15:43,299 autoreload 1200 14816 Watching for file changes with StatReloader
+INFO 2025-06-05 04:16:03,377 autoreload 3000 15288 Watching for file changes with StatReloader
+INFO 2025-06-05 04:16:09,314 basehttp 16196 16112 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-05 04:16:13,275 basehttp 16196 16112 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-05 04:16:22,749 basehttp 3000 8860 "GET / HTTP/1.1" 200 17025
+INFO 2025-06-05 04:16:30,614 basehttp 16196 16112 - Broken pipe from ('127.0.0.1', 58132)
+INFO 2025-06-05 04:16:30,907 basehttp 16196 5820 "POST /accounts/login/ HTTP/1.1" 200 7302
+INFO 2025-06-07 16:26:54,860 autoreload 8972 1816 Watching for file changes with StatReloader
+INFO 2025-06-07 16:26:57,688 basehttp 8972 3184 "GET / HTTP/1.1" 200 17025
+INFO 2025-06-07 16:27:14,707 basehttp 8972 4748 - Broken pipe from ('127.0.0.1', 50093)
+INFO 2025-06-07 16:27:14,707 basehttp 8972 5296 "GET /about/ HTTP/1.1" 200 74340
+INFO 2025-06-07 16:27:14,994 basehttp 8972 2060 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-07 16:27:26,759 basehttp 8972 5296 "GET /about/ HTTP/1.1" 200 74340
+INFO 2025-06-07 16:27:26,865 basehttp 8972 2060 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-07 16:27:29,963 basehttp 8972 5296 "GET /tasks/ HTTP/1.1" 302 0
+INFO 2025-06-07 16:27:30,073 basehttp 8972 5296 "GET /accounts/login/?next=/tasks/ HTTP/1.1" 200 7108
+INFO 2025-06-07 16:27:41,592 basehttp 8972 5296 "POST /accounts/login/?next=/tasks/ HTTP/1.1" 200 7302
+INFO 2025-06-07 16:27:45,492 basehttp 8972 5296 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-07 17:01:14,473 basehttp 8972 14220 "POST /accounts/signup/ HTTP/1.1" 200 22254
+INFO 2025-06-07 17:01:14,507 basehttp 8972 14220 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-07 17:01:19,960 basehttp 8972 14220 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-07 17:01:37,907 basehttp 8972 14220 "POST /accounts/login/ HTTP/1.1" 200 7302
+INFO 2025-06-07 17:02:21,228 basehttp 8972 14832 "POST /accounts/login/ HTTP/1.1" 200 7302
+INFO 2025-06-07 17:02:25,836 basehttp 8972 14832 "POST /accounts/login/ HTTP/1.1" 200 7302
+INFO 2025-06-07 17:02:30,083 basehttp 8972 14832 "POST /accounts/login/ HTTP/1.1" 200 7289
+INFO 2025-06-07 17:02:50,632 basehttp 8972 14832 "POST /accounts/login/ HTTP/1.1" 200 7289
+INFO 2025-06-07 17:02:56,432 basehttp 8972 14832 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-07 17:03:28,401 basehttp 8972 14832 "POST /accounts/signup/ HTTP/1.1" 200 22261
+INFO 2025-06-07 17:03:28,429 basehttp 8972 14832 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-07 17:03:35,327 basehttp 8972 14832 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-07 17:04:45,640 basehttp 8972 14832 "POST /accounts/login/ HTTP/1.1" 200 7307
+INFO 2025-06-07 17:04:56,797 basehttp 8972 14832 "POST /accounts/login/ HTTP/1.1" 200 7307
+INFO 2025-06-07 17:05:06,515 basehttp 8972 14832 "POST /accounts/login/ HTTP/1.1" 200 7307
+INFO 2025-06-07 17:05:28,927 basehttp 8972 14832 "POST /accounts/login/ HTTP/1.1" 200 7302
+INFO 2025-06-07 17:05:52,757 autoreload 8972 1816 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\urls.py changed, reloading.
+INFO 2025-06-07 17:05:56,421 autoreload 4272 13776 Watching for file changes with StatReloader
+INFO 2025-06-10 01:40:43,549 autoreload 8300 8912 Watching for file changes with StatReloader
+INFO 2025-06-10 01:40:53,523 basehttp 8300 9240 "GET / HTTP/1.1" 200 17025
+INFO 2025-06-10 01:40:58,795 basehttp 8300 9240 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-10 01:41:10,553 basehttp 8300 9240 "POST /accounts/login/ HTTP/1.1" 200 7302
+INFO 2025-06-10 01:41:13,597 basehttp 8300 9240 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-10 01:41:34,993 basehttp 8300 9240 "POST /accounts/signup/ HTTP/1.1" 200 22262
+INFO 2025-06-10 01:41:35,309 basehttp 8300 9240 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-10 01:41:40,616 basehttp 8300 9240 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-10 01:41:42,097 basehttp 8300 9240 "GET / HTTP/1.1" 200 17025
+INFO 2025-06-10 01:41:43,913 basehttp 8300 9240 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-10 01:41:50,663 basehttp 8300 9240 "POST /accounts/login/ HTTP/1.1" 200 7302
+INFO 2025-06-10 01:41:55,629 basehttp 8300 9240 "POST /accounts/login/ HTTP/1.1" 200 7302
+INFO 2025-06-10 01:41:59,033 basehttp 8300 9240 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-10 01:42:14,514 basehttp 8300 9240 "POST /accounts/signup/ HTTP/1.1" 200 22257
+INFO 2025-06-10 01:42:14,615 basehttp 8300 9240 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-10 01:42:17,381 basehttp 8300 9240 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-10 01:42:26,356 basehttp 8300 9240 "POST /accounts/login/ HTTP/1.1" 200 7292
+INFO 2025-06-10 01:45:52,490 autoreload 15036 14332 Watching for file changes with StatReloader
+INFO 2025-06-10 01:46:53,092 autoreload 15036 14332 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-10 01:46:54,960 autoreload 3548 5124 Watching for file changes with StatReloader
+INFO 2025-06-10 01:47:02,803 basehttp 3548 9176 "POST /accounts/login/ HTTP/1.1" 200 7292
+INFO 2025-06-10 01:47:16,380 basehttp 3548 9176 "POST /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-06-10 01:47:16,567 basehttp 3548 9176 "GET /tasks/ HTTP/1.1" 200 81304
+INFO 2025-06-10 01:47:16,657 basehttp 3548 9176 "GET /media/avatars/%D8%B5%D9%88%D8%B1%D8%A9_%D9%88%D8%A7%D8%AA%D8%B3%D8%A7%D8%A8_%D8%A8%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE_1446-11-28_%D9%81%D9%8A_01.59.12_39ea9c29.jpg HTTP/1.1" 304 0
+INFO 2025-06-10 01:47:17,063 basehttp 3548 1996 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:47:19,932 basehttp 3548 9176 "GET /ai/chat/ HTTP/1.1" 200 164422
+INFO 2025-06-10 01:47:20,212 basehttp 3548 1996 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:47:26,983 autoreload 3548 5124 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-10 01:47:29,200 autoreload 12056 11276 Watching for file changes with StatReloader
+INFO 2025-06-10 01:47:32,385 basehttp 12056 14960 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-10 01:47:32,582 basehttp 12056 4312 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:47:37,065 basehttp 12056 14960 "GET /tasks/create/ HTTP/1.1" 200 89333
+INFO 2025-06-10 01:47:37,317 basehttp 12056 4312 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:47:39,121 basehttp 12056 14960 "GET /tasks/list/ HTTP/1.1" 200 96008
+INFO 2025-06-10 01:47:39,277 basehttp 12056 4312 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:47:46,938 basehttp 12056 14960 "GET /tasks/ HTTP/1.1" 200 81304
+INFO 2025-06-10 01:47:47,068 basehttp 12056 4312 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:47:49,478 basehttp 12056 14960 "GET /tasks/list/ HTTP/1.1" 200 96008
+INFO 2025-06-10 01:47:49,661 basehttp 12056 4312 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:47:51,043 autoreload 12056 11276 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\forms.py changed, reloading.
+INFO 2025-06-10 01:47:53,590 autoreload 7164 876 Watching for file changes with StatReloader
+INFO 2025-06-10 01:47:56,115 basehttp 7164 4392 "GET /ai/chat/ HTTP/1.1" 200 164422
+INFO 2025-06-10 01:47:56,639 basehttp 7164 1824 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:48:03,304 basehttp 7164 4392 "POST /ai/api/send-message/ HTTP/1.1" 200 1448
+INFO 2025-06-10 01:48:07,366 autoreload 7164 876 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\views.py changed, reloading.
+INFO 2025-06-10 01:48:10,198 autoreload 13772 10188 Watching for file changes with StatReloader
+INFO 2025-06-10 01:48:13,715 basehttp 13772 7628 "GET /ai/chat/40/ HTTP/1.1" 200 188679
+INFO 2025-06-10 01:48:14,268 basehttp 13772 9232 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:48:19,693 basehttp 13772 7628 "GET /ai/chat/ HTTP/1.1" 200 164396
+INFO 2025-06-10 01:48:19,863 basehttp 13772 9232 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:48:25,320 autoreload 13772 10188 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\accounts\views.py changed, reloading.
+INFO 2025-06-10 01:48:27,032 autoreload 5684 2148 Watching for file changes with StatReloader
+INFO 2025-06-10 01:48:37,226 basehttp 5684 13240 "POST /ai/api/send-message/ HTTP/1.1" 200 7634
+WARNING 2025-06-10 01:50:01,482 log 14860 11568 Bad Request: /accounts/login/
+WARNING 2025-06-10 01:50:01,556 log 14860 11568 Bad Request: /accounts/login/
+WARNING 2025-06-10 01:50:01,633 log 14860 11568 Bad Request: /accounts/login/
+WARNING 2025-06-10 01:50:01,688 log 14860 11568 Bad Request: /tasks/
+INFO 2025-06-10 01:50:25,283 autoreload 3376 3024 Watching for file changes with StatReloader
+INFO 2025-06-10 01:50:29,047 basehttp 3376 5656 "GET /ai/chat/42/ HTTP/1.1" 200 181152
+INFO 2025-06-10 01:50:29,851 basehttp 3376 10048 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:50:32,733 basehttp 3376 5656 "GET /ai/chat/ HTTP/1.1" 200 164401
+INFO 2025-06-10 01:50:33,070 basehttp 3376 10048 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:50:48,772 basehttp 3376 5656 "POST /ai/api/send-message/ HTTP/1.1" 200 3805
+INFO 2025-06-10 01:51:05,242 basehttp 3376 5656 "GET /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-06-10 01:51:05,501 basehttp 3376 5656 "GET /tasks/ HTTP/1.1" 200 81304
+INFO 2025-06-10 01:51:06,095 basehttp 3376 10048 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:54:55,159 autoreload 3376 3024 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\ai_assistant\services.py changed, reloading.
+INFO 2025-06-10 01:54:56,493 autoreload 12800 14308 Watching for file changes with StatReloader
+INFO 2025-06-10 01:55:14,296 autoreload 12800 14308 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\ai_assistant\views.py changed, reloading.
+INFO 2025-06-10 01:55:15,574 autoreload 9328 9644 Watching for file changes with StatReloader
+INFO 2025-06-10 01:56:42,469 basehttp 9328 6040 "GET /tasks/ HTTP/1.1" 200 81304
+INFO 2025-06-10 01:56:42,679 basehttp 9328 8364 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:57:10,582 basehttp 9328 7176 "GET /ai/chat/ HTTP/1.1" 200 166688
+INFO 2025-06-10 01:57:10,894 basehttp 9328 13516 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:57:21,907 basehttp 9328 7176 "POST /ai/api/send-message/ HTTP/1.1" 200 1576
+INFO 2025-06-10 01:57:51,456 basehttp 9328 7176 "POST /ai/api/send-message/ HTTP/1.1" 200 4799
+INFO 2025-06-10 01:58:48,741 basehttp 9328 7176 "GET /ai/chat/44/ HTTP/1.1" 200 187817
+INFO 2025-06-10 01:58:49,253 basehttp 9328 13516 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:58:51,308 basehttp 9328 7176 "GET /ai/chat/ HTTP/1.1" 200 166823
+INFO 2025-06-10 01:58:51,503 basehttp 9328 13516 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 01:59:02,215 basehttp 9328 7176 "POST /ai/api/send-message/ HTTP/1.1" 200 1126
+INFO 2025-06-10 01:59:20,486 basehttp 9328 7176 "POST /ai/api/send-message/ HTTP/1.1" 200 1866
+WARNING 2025-06-10 02:00:31,537 log 10624 15220 Bad Request: /ai/chat/
+INFO 2025-06-10 02:00:45,808 basehttp 9328 7176 "GET /ai/chat/45/ HTTP/1.1" 200 181035
+INFO 2025-06-10 02:00:46,124 basehttp 9328 13516 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:00:54,626 basehttp 9328 7176 "GET /ai/chat/ HTTP/1.1" 200 167835
+INFO 2025-06-10 02:00:54,991 basehttp 9328 13516 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:01:38,921 autoreload 12784 14484 Watching for file changes with StatReloader
+INFO 2025-06-10 02:01:40,872 basehttp 12784 13288 "GET /ai/chat/ HTTP/1.1" 200 167843
+INFO 2025-06-10 02:01:41,161 basehttp 12784 13152 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:01:56,636 basehttp 12784 13288 "POST /ai/api/send-message/ HTTP/1.1" 200 1310
+INFO 2025-06-10 02:02:02,163 basehttp 12784 13288 "GET /ai/chat/ HTTP/1.1" 200 167767
+INFO 2025-06-10 02:02:03,086 basehttp 12784 13152 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:02:21,485 basehttp 12784 13288 "POST /ai/api/send-message/ HTTP/1.1" 200 2436
+INFO 2025-06-10 02:03:10,569 basehttp 12784 13288 "GET /ai/chat/47/ HTTP/1.1" 200 172987
+INFO 2025-06-10 02:03:10,962 basehttp 12784 13152 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:03:11,939 basehttp 12784 13288 "GET /ai/chat/ HTTP/1.1" 200 167670
+INFO 2025-06-10 02:03:12,153 basehttp 12784 13152 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:03:30,805 basehttp 12784 13288 "POST /ai/api/send-message/ HTTP/1.1" 200 971
+INFO 2025-06-10 02:03:37,532 autoreload 12784 14484 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\ai_assistant\views.py changed, reloading.
+INFO 2025-06-10 02:03:39,430 autoreload 12040 5384 Watching for file changes with StatReloader
+INFO 2025-06-10 02:10:01,144 autoreload 3544 2412 Watching for file changes with StatReloader
+INFO 2025-06-10 02:10:04,798 basehttp 3544 9892 "GET /ai/chat/ HTTP/1.1" 200 167665
+INFO 2025-06-10 02:10:05,211 basehttp 3544 13560 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:10:13,108 basehttp 3544 9892 "POST /ai/api/send-message/ HTTP/1.1" 200 2038
+INFO 2025-06-10 02:10:49,098 basehttp 3544 9892 "POST /ai/api/send-message/ HTTP/1.1" 200 1225
+INFO 2025-06-10 02:12:46,448 autoreload 2656 3580 Watching for file changes with StatReloader
+INFO 2025-06-10 02:14:22,422 basehttp 3544 9892 "GET /ai/chat/49/ HTTP/1.1" 200 185946
+INFO 2025-06-10 02:14:23,116 basehttp 3544 13560 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:14:24,700 basehttp 3544 9892 "GET /ai/chat/ HTTP/1.1" 200 171612
+INFO 2025-06-10 02:14:24,817 basehttp 3544 13560 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 02:14:32,005 basehttp 3544 9892 "POST /ai/api/send-message/ HTTP/1.1" 200 1328
+INFO 2025-06-10 18:41:29,313 basehttp 3544 17340 "GET /accounts/profile/ HTTP/1.1" 200 71344
+INFO 2025-06-10 18:41:29,419 basehttp 3544 17340 "GET /media/avatars/%D8%B5%D9%88%D8%B1%D8%A9_%D9%88%D8%A7%D8%AA%D8%B3%D8%A7%D8%A8_%D8%A8%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE_1446-11-28_%D9%81%D9%8A_01.59.12_39ea9c29.jpg HTTP/1.1" 304 0
+INFO 2025-06-10 18:41:29,712 basehttp 3544 17732 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 18:41:31,608 basehttp 3544 17340 "GET /tasks/ HTTP/1.1" 200 81334
+INFO 2025-06-10 18:41:32,246 basehttp 3544 17732 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 18:41:33,728 basehttp 3544 17340 "GET /tasks/list/ HTTP/1.1" 200 96023
+INFO 2025-06-10 18:41:33,937 basehttp 3544 17732 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 18:45:45,128 basehttp 3544 13864 "GET /ai/chat/ HTTP/1.1" 200 171822
+INFO 2025-06-10 18:45:45,715 basehttp 3544 7988 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 18:45:46,836 basehttp 3544 13864 "GET /tasks/list/ HTTP/1.1" 200 96023
+INFO 2025-06-10 18:45:47,238 basehttp 3544 7988 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 18:46:00,105 basehttp 3544 13864 "GET /accounts/settings/ HTTP/1.1" 200 83990
+INFO 2025-06-10 18:46:00,290 basehttp 3544 7988 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-10 18:46:01,204 basehttp 3544 13864 "GET /accounts/profile/ HTTP/1.1" 200 71344
+INFO 2025-06-10 18:46:01,321 basehttp 3544 7988 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-15 23:52:26,884 autoreload 2460 8000 Watching for file changes with StatReloader
+INFO 2025-06-15 23:52:41,317 basehttp 2460 8884 "GET / HTTP/1.1" 200 17079
+WARNING 2025-06-15 23:52:42,884 basehttp 2460 8884 "GET /static/css/home.css HTTP/1.1" 404 1896
+INFO 2025-06-15 23:52:46,542 basehttp 2460 1760 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-15 23:52:57,408 basehttp 2460 1760 "POST /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-06-15 23:52:57,570 basehttp 2460 1760 "GET /tasks/ HTTP/1.1" 200 81688
+INFO 2025-06-15 23:52:58,131 basehttp 2460 1760 "GET /media/avatars/%D8%B5%D9%88%D8%B1%D8%A9_%D9%88%D8%A7%D8%AA%D8%B3%D8%A7%D8%A8_%D8%A8%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE_1446-11-28_%D9%81%D9%8A_01.59.12_39ea9c29.jpg HTTP/1.1" 304 0
+INFO 2025-06-15 23:52:58,844 basehttp 2460 12340 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-15 23:53:05,216 basehttp 2460 1760 "GET /tasks/list/ HTTP/1.1" 200 96016
+INFO 2025-06-15 23:53:06,440 basehttp 2460 12340 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-15 23:53:08,544 basehttp 2460 1760 "GET /tasks/create/ HTTP/1.1" 200 89333
+INFO 2025-06-15 23:53:09,533 basehttp 2460 12340 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-15 23:53:27,313 basehttp 2460 1760 "GET /about/ HTTP/1.1" 200 98459
+INFO 2025-06-15 23:53:27,543 basehttp 2460 12340 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-15 23:53:33,700 basehttp 2460 1760 "GET /tasks/create/ HTTP/1.1" 200 89333
+INFO 2025-06-15 23:53:33,954 basehttp 2460 12340 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-15 23:53:36,166 basehttp 2460 1760 "GET /ai/chat/ HTTP/1.1" 200 164155
+INFO 2025-06-15 23:53:36,816 basehttp 2460 12340 "GET /manifest.json HTTP/1.1" 200 1081
+WARNING 2025-06-15 23:56:39,690 log 13164 12848 Bad Request: /
+WARNING 2025-06-15 23:56:39,740 log 13164 12848 Bad Request: /accounts/login/
+WARNING 2025-06-15 23:56:39,782 log 13164 12848 Bad Request: /accounts/signup/
+WARNING 2025-06-15 23:56:39,827 log 13164 12848 Bad Request: /about/
+WARNING 2025-06-15 23:56:39,891 log 13164 12848 Bad Request: /robots.txt
+INFO 2025-06-15 23:57:03,207 autoreload 6628 5060 Watching for file changes with StatReloader
+INFO 2025-06-16 00:03:16,020 autoreload 2460 8000 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:03:19,051 autoreload 4892 7720 Watching for file changes with StatReloader
+INFO 2025-06-16 00:03:29,857 autoreload 4892 7720 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:03:33,329 autoreload 11948 13064 Watching for file changes with StatReloader
+INFO 2025-06-16 00:03:58,167 autoreload 11948 13064 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:03:59,941 autoreload 7144 11144 Watching for file changes with StatReloader
+INFO 2025-06-16 00:05:56,527 autoreload 6020 3416 Watching for file changes with StatReloader
+INFO 2025-06-16 00:14:54,200 autoreload 5556 11724 Watching for file changes with StatReloader
+INFO 2025-06-16 00:15:25,422 autoreload 2996 4076 Watching for file changes with StatReloader
+INFO 2025-06-16 00:17:24,380 autoreload 8748 12580 Watching for file changes with StatReloader
+INFO 2025-06-16 00:19:36,298 autoreload 7144 11144 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:19:37,868 autoreload 1504 8396 Watching for file changes with StatReloader
+INFO 2025-06-16 00:19:56,489 autoreload 1504 8396 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:19:58,422 autoreload 7444 7984 Watching for file changes with StatReloader
+INFO 2025-06-16 00:20:03,810 autoreload 9040 1168 Watching for file changes with StatReloader
+INFO 2025-06-16 00:21:27,213 autoreload 9040 1168 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:21:27,470 autoreload 7444 7984 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:21:29,281 autoreload 8140 6920 Watching for file changes with StatReloader
+INFO 2025-06-16 00:21:29,590 autoreload 6868 11452 Watching for file changes with StatReloader
+INFO 2025-06-16 00:22:58,532 basehttp 6868 8596 "GET / HTTP/1.1" 200 8109
+INFO 2025-06-16 00:22:59,005 basehttp 6868 6020 "GET /static/css/home.css HTTP/1.1" 200 6879
+INFO 2025-06-16 00:22:59,005 basehttp 6868 8596 "GET /static/js/home.js HTTP/1.1" 200 7051
+INFO 2025-06-16 00:23:01,748 basehttp 6868 8596 "GET /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-06-16 00:23:01,855 basehttp 6868 8596 "GET /tasks/ HTTP/1.1" 200 81320
+INFO 2025-06-16 00:23:03,108 basehttp 6868 10236 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:23:05,709 basehttp 6868 8596 "GET /accounts/logout/ HTTP/1.1" 302 0
+ERROR 2025-06-16 00:23:06,169 log 6868 8596 Internal Server Error: /accounts/login/
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: django_site
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\decorators\debug.py", line 92, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\auth\views.py", line 90, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\generic\edit.py", line 144, in get
+    return self.render_to_response(self.get_context_data())
+                                   ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\auth\views.py", line 114, in get_context_data
+    current_site = get_current_site(self.request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\sites\shortcuts.py", line 16, in get_current_site
+    return Site.objects.get_current(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\sites\models.py", line 61, in get_current
+    return self._get_site_by_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\sites\models.py", line 39, in _get_site_by_request
+    SITE_CACHE[host] = self.get(domain__iexact=host)
+                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: django_site
+ERROR 2025-06-16 00:23:06,207 basehttp 6868 8596 "GET /accounts/login/ HTTP/1.1" 500 200362
+WARNING 2025-06-16 00:23:06,936 log 6868 8596 Not Found: /favicon.ico
+WARNING 2025-06-16 00:23:06,939 basehttp 6868 8596 "GET /favicon.ico HTTP/1.1" 404 3307
+INFO 2025-06-16 00:23:31,763 basehttp 6868 1376 "GET / HTTP/1.1" 200 8109
+INFO 2025-06-16 00:23:31,828 basehttp 6868 1376 "GET /static/css/home.css HTTP/1.1" 200 6879
+INFO 2025-06-16 00:23:31,828 basehttp 6868 10792 "GET /static/js/home.js HTTP/1.1" 200 7051
+ERROR 2025-06-16 00:23:37,231 log 6868 1376 Internal Server Error: /accounts/login/
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: django_site
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\decorators\debug.py", line 92, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\auth\views.py", line 90, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\views\generic\edit.py", line 144, in get
+    return self.render_to_response(self.get_context_data())
+                                   ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\auth\views.py", line 114, in get_context_data
+    current_site = get_current_site(self.request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\sites\shortcuts.py", line 16, in get_current_site
+    return Site.objects.get_current(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\sites\models.py", line 61, in get_current
+    return self._get_site_by_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\contrib\sites\models.py", line 39, in _get_site_by_request
+    SITE_CACHE[host] = self.get(domain__iexact=host)
+                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\query.py", line 633, in get
+    num = len(clone)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: django_site
+ERROR 2025-06-16 00:23:37,247 basehttp 6868 1376 "GET /accounts/login/ HTTP/1.1" 500 199755
+WARNING 2025-06-16 00:23:38,127 log 6868 1376 Not Found: /favicon.ico
+WARNING 2025-06-16 00:23:38,134 basehttp 6868 1376 "GET /favicon.ico HTTP/1.1" 404 3307
+ERROR 2025-06-16 00:23:42,646 log 6868 1376 Internal Server Error: /accounts/signup/
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'get_providers'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\template\base.py", line 558, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 163: 'get_providers', expected 'endblock'. Did you forget to register or load this tag?
+ERROR 2025-06-16 00:23:42,663 basehttp 6868 1376 "GET /accounts/signup/ HTTP/1.1" 500 250998
+INFO 2025-06-16 00:24:04,020 autoreload 8140 6920 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:24:05,130 autoreload 6868 11452 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 00:24:08,340 autoreload 11984 5804 Watching for file changes with StatReloader
+INFO 2025-06-16 00:24:08,367 autoreload 10848 4580 Watching for file changes with StatReloader
+INFO 2025-06-16 00:24:28,270 basehttp 11984 1936 "GET / HTTP/1.1" 200 17025
+INFO 2025-06-16 00:24:29,846 basehttp 11984 1936 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-16 00:24:39,219 basehttp 11984 1936 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-16 00:25:20,644 basehttp 11984 1936 "POST /accounts/signup/ HTTP/1.1" 200 22061
+INFO 2025-06-16 00:25:20,674 basehttp 11984 1936 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-16 00:25:25,430 basehttp 11984 1936 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-16 00:25:34,598 basehttp 11984 1936 "POST /accounts/login/ HTTP/1.1" 200 7692
+INFO 2025-06-16 00:25:43,185 basehttp 11984 1936 "POST /accounts/login/ HTTP/1.1" 200 7669
+INFO 2025-06-16 00:25:48,985 basehttp 11984 1936 - Broken pipe from ('127.0.0.1', 55062)
+INFO 2025-06-16 00:25:49,475 basehttp 11984 5932 "POST /accounts/login/ HTTP/1.1" 200 7713
+INFO 2025-06-16 00:26:00,319 basehttp 11984 5932 "POST /accounts/login/ HTTP/1.1" 200 7692
+INFO 2025-06-16 00:26:02,858 basehttp 11984 5932 "GET /accounts/signup/ HTTP/1.1" 200 21490
+INFO 2025-06-16 00:26:26,352 basehttp 11984 5932 "POST /accounts/signup/ HTTP/1.1" 302 0
+INFO 2025-06-16 00:26:26,713 basehttp 11984 5932 "GET /tasks/ HTTP/1.1" 200 71798
+INFO 2025-06-16 00:26:27,211 basehttp 11984 5932 "GET /tasks/ HTTP/1.1" 200 71392
+INFO 2025-06-16 00:26:28,720 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:26:33,250 basehttp 11984 5932 "GET /tasks/list/ HTTP/1.1" 200 89327
+INFO 2025-06-16 00:26:33,802 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:26:35,942 basehttp 11984 5932 "GET /ai/chat/ HTTP/1.1" 200 156771
+INFO 2025-06-16 00:26:36,432 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:26:43,085 basehttp 11984 5932 "POST /ai/api/send-message/ HTTP/1.1" 200 1525
+INFO 2025-06-16 00:26:46,816 basehttp 11984 5932 "GET /ai/chat/ HTTP/1.1" 200 156973
+INFO 2025-06-16 00:26:47,474 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:27:08,395 basehttp 11984 5932 "POST /ai/api/send-message/ HTTP/1.1" 200 1360
+INFO 2025-06-16 00:27:31,257 basehttp 11984 5932 "POST /ai/api/send-message/ HTTP/1.1" 200 6971
+INFO 2025-06-16 00:27:46,315 basehttp 11984 5932 "GET /ai/chat/51/ HTTP/1.1" 200 161226
+INFO 2025-06-16 00:27:46,971 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:27:59,394 basehttp 11984 5932 "GET /ai/chat/52/ HTTP/1.1" 200 183227
+INFO 2025-06-16 00:28:00,105 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:28:09,359 basehttp 11984 5932 "GET /tasks/ HTTP/1.1" 200 71392
+INFO 2025-06-16 00:28:09,880 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:30:08,052 basehttp 11984 5932 "GET /ai/chat/ HTTP/1.1" 200 157685
+INFO 2025-06-16 00:30:08,653 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:30:58,222 basehttp 11984 5932 "GET /about/ HTTP/1.1" 200 98256
+INFO 2025-06-16 00:30:59,192 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:32:02,794 basehttp 11984 5932 "GET /tasks/create/ HTTP/1.1" 200 89130
+INFO 2025-06-16 00:32:03,555 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:32:14,730 basehttp 11984 5932 "GET /tasks/calendar/ HTTP/1.1" 200 103571
+INFO 2025-06-16 00:32:15,281 basehttp 11984 5932 "GET /tasks/api/tasks/ HTTP/1.1" 200 2
+INFO 2025-06-16 00:32:15,885 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:32:46,584 basehttp 11984 5932 "GET /tasks/list/ HTTP/1.1" 200 89327
+INFO 2025-06-16 00:32:46,872 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:33:01,673 basehttp 11984 5932 "GET /tasks/ HTTP/1.1" 200 71392
+INFO 2025-06-16 00:33:02,164 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:33:04,203 basehttp 11984 5932 "GET /tasks/calendar/ HTTP/1.1" 200 103571
+INFO 2025-06-16 00:33:04,480 basehttp 11984 5932 "GET /tasks/api/tasks/ HTTP/1.1" 200 2
+INFO 2025-06-16 00:33:04,739 basehttp 11984 11492 "GET /manifest.json HTTP/1.1" 200 1081
+INFO 2025-06-16 00:52:04,341 basehttp 11984 10020 "GET /accounts/login/ HTTP/1.1" 200 7108
+INFO 2025-06-16 01:44:06,490 autoreload 11984 5804 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 01:44:06,530 autoreload 10848 4580 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 01:44:08,979 autoreload 5224 16048 Watching for file changes with StatReloader
+
+INFO 2025-06-16 01:48:52,976 autoreload 14704 14420 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 01:48:53,008 autoreload 5224 16048 C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\task_manager\settings.py changed, reloading.
+INFO 2025-06-16 01:48:54,763 autoreload 15928 13532 Watching for file changes with StatReloader
+INFO 2025-06-16 01:48:54,788 autoreload 15944 13960 Watching for file changes with StatReloader

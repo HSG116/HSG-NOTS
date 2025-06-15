@@ -1,0 +1,517 @@
+{% extends 'auth_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block title %}{% trans "إنشاء حساب جديد" %} - {{ block.super }}{% endblock %}
+
+{% block auth_subtitle %}{% trans "انضم إلينا اليوم" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        max-width: 650px;
+        margin: 1rem auto;
+    }
+
+    .auth-body {
+        padding: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-control {
+        height: 50px;
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--whatsapp-green);
+        box-shadow: 0 0 0 0.2rem rgba(37, 211, 102, 0.25);
+    }
+
+    .form-control.is-valid {
+        border-color: #28a745;
+    }
+
+    .form-control.is-invalid {
+        border-color: #dc3545;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #6c757d;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .password-strength {
+        height: 4px;
+        border-radius: 2px;
+        margin-top: 0.5rem;
+        transition: all 0.3s ease;
+        background: #e9ecef;
+    }
+
+    .strength-weak { background: linear-gradient(90deg, #dc3545 0%, #dc3545 33%, #e9ecef 33%); }
+    .strength-medium { background: linear-gradient(90deg, #ffc107 0%, #ffc107 66%, #e9ecef 66%); }
+    .strength-strong { background: linear-gradient(90deg, #28a745 0%, #28a745 100%); }
+
+    .form-check-input:checked {
+        background-color: var(--whatsapp-green);
+        border-color: var(--whatsapp-green);
+    }
+
+    .btn-primary {
+        height: 50px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .invalid-feedback {
+        display: block;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .valid-feedback {
+        display: block;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        color: #28a745;
+    }
+
+    .form-text {
+        font-size: 0.875rem;
+        color: #6c757d;
+        margin-top: 0.25rem;
+    }
+
+    .input-group {
+        position: relative;
+    }
+
+    @media (max-width: 768px) {
+        .auth-container {
+            margin: 0.5rem;
+            max-width: none;
+        }
+
+        .auth-body {
+            padding: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<form method="post" class="needs-validation" novalidate id="signupForm">
+    {% csrf_token %}
+
+    <!-- الاسم الكامل -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                    <i class="fas fa-user me-2"></i>
+                    {% trans "الاسم الأول" %} <span class="text-danger">*</span>
+                </label>
+                {{ form.first_name|add_class:"form-control" }}
+                {% if form.first_name.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.first_name.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                    <i class="fas fa-user me-2"></i>
+                    {% trans "الاسم الأخير" %} <span class="text-danger">*</span>
+                </label>
+                {{ form.last_name|add_class:"form-control" }}
+                {% if form.last_name.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.last_name.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- اسم المستخدم -->
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}" class="form-label">
+            <i class="fas fa-at me-2"></i>
+            {% trans "اسم المستخدم" %} <span class="text-danger">*</span>
+        </label>
+        {{ form.username|add_class:"form-control" }}
+        {% if form.username.errors %}
+            <div class="invalid-feedback">
+                {{ form.username.errors.0 }}
+            </div>
+        {% endif %}
+        <div class="form-text">
+            <i class="fas fa-info-circle me-1 text-primary"></i>
+            {% trans "سيتم استخدامه لتسجيل الدخول بالإضافة إلى البريد الإلكتروني" %}
+        </div>
+    </div>
+
+    <!-- البريد الإلكتروني -->
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}" class="form-label">
+            <i class="fas fa-envelope me-2"></i>
+            {% trans "البريد الإلكتروني" %} <span class="text-danger">*</span>
+        </label>
+        {{ form.email|add_class:"form-control" }}
+        {% if form.email.errors %}
+            <div class="invalid-feedback">
+                {{ form.email.errors.0 }}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- رقم الهاتف -->
+    <div class="form-group">
+        <label for="{{ form.phone.id_for_label }}" class="form-label">
+            <i class="fas fa-phone me-2"></i>
+            {% trans "رقم الهاتف" %} <small class="text-muted">({% trans "اختياري" %})</small>
+        </label>
+        {{ form.phone|add_class:"form-control" }}
+        {% if form.phone.errors %}
+            <div class="invalid-feedback">
+                {{ form.phone.errors.0 }}
+            </div>
+        {% endif %}
+    </div>
+
+
+
+    <!-- كلمة المرور -->
+    <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}" class="form-label">
+            <i class="fas fa-lock me-2"></i>
+            {% trans "كلمة المرور" %} <span class="text-danger">*</span>
+        </label>
+        <div class="input-group">
+            {{ form.password1|add_class:"form-control" }}
+            <button class="password-toggle" type="button" id="togglePassword1">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+        {% if form.password1.errors %}
+            <div class="invalid-feedback">
+                {{ form.password1.errors.0 }}
+            </div>
+        {% endif %}
+        <div class="password-strength" id="passwordStrength"></div>
+        <div class="form-text">
+            {% trans "يجب أن تحتوي على 8 أحرف على الأقل مع أرقام وحروف" %}
+        </div>
+    </div>
+
+    <!-- تأكيد كلمة المرور -->
+    <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}" class="form-label">
+            <i class="fas fa-lock me-2"></i>
+            {% trans "تأكيد كلمة المرور" %} <span class="text-danger">*</span>
+        </label>
+        <div class="input-group">
+            {{ form.password2|add_class:"form-control" }}
+            <button class="password-toggle" type="button" id="togglePassword2">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+        {% if form.password2.errors %}
+            <div class="invalid-feedback">
+                {{ form.password2.errors.0 }}
+            </div>
+        {% endif %}
+        <div id="passwordMatch" class="form-text"></div>
+    </div>
+
+    <!-- الموافقة على الشروط -->
+    <div class="form-group">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+            <label class="form-check-label" for="agreeTerms">
+                {% trans "أوافق على" %}
+                <a href="#" class="text-decoration-none">{% trans "الشروط والأحكام" %}</a>
+                {% trans "و" %}
+                <a href="#" class="text-decoration-none">{% trans "سياسة الخصوصية" %}</a>
+                <span class="text-danger">*</span>
+            </label>
+            <div class="invalid-feedback">
+                {% trans "يجب الموافقة على الشروط والأحكام" %}
+            </div>
+        </div>
+    </div>
+
+    <!-- رسائل الأخطاء العامة -->
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ form.non_field_errors.0 }}
+        </div>
+    {% endif %}
+
+    <!-- زر الإرسال -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary w-100" id="submitBtn">
+            <span class="spinner-border spinner-border-sm me-2 d-none" id="loadingSpinner"></span>
+            <i class="fas fa-user-plus me-2" id="submitIcon"></i>
+            <span id="submitText">{% trans "إنشاء الحساب" %}</span>
+        </button>
+    </div>
+</form>
+
+<div class="text-center mt-3">
+    <p class="text-muted mb-0">
+        {% trans "لديك حساب بالفعل؟" %}
+        <a href="{% url 'accounts:login' %}" class="text-decoration-none fw-bold">
+            {% trans "تسجيل الدخول" %}
+        </a>
+    </p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('signupForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const submitIcon = document.getElementById('submitIcon');
+    const submitText = document.getElementById('submitText');
+    const password1 = document.getElementById('{{ form.password1.id_for_label }}');
+    const password2 = document.getElementById('{{ form.password2.id_for_label }}');
+    const passwordStrength = document.getElementById('passwordStrength');
+    const passwordMatch = document.getElementById('passwordMatch');
+    const agreeTerms = document.getElementById('agreeTerms');
+
+    // Toggle password visibility
+    function togglePasswordVisibility(toggleId, passwordFieldId) {
+        const toggleBtn = document.getElementById(toggleId);
+        const passwordField = document.getElementById(passwordFieldId);
+
+        if (toggleBtn && passwordField) {
+            toggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const icon = this.querySelector('i');
+
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        }
+    }
+
+    togglePasswordVisibility('togglePassword1', '{{ form.password1.id_for_label }}');
+    togglePasswordVisibility('togglePassword2', '{{ form.password2.id_for_label }}');
+
+    // Password strength checker
+    if (password1 && passwordStrength) {
+        password1.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            passwordStrength.className = 'password-strength';
+
+            if (password.length === 0) {
+                passwordStrength.style.background = '#e9ecef';
+            } else if (strength < 2) {
+                passwordStrength.classList.add('strength-weak');
+            } else if (strength < 4) {
+                passwordStrength.classList.add('strength-medium');
+            } else {
+                passwordStrength.classList.add('strength-strong');
+            }
+
+            // Validate password confirmation when password1 changes
+            if (password2.value) {
+                validatePasswordMatch();
+            }
+        });
+    }
+
+    // Password confirmation validation
+    function validatePasswordMatch() {
+        if (password1.value !== password2.value) {
+            password2.classList.add('is-invalid');
+            password2.classList.remove('is-valid');
+            passwordMatch.textContent = 'كلمات المرور غير متطابقة';
+            passwordMatch.style.color = '#dc3545';
+            return false;
+        } else {
+            password2.classList.remove('is-invalid');
+            password2.classList.add('is-valid');
+            passwordMatch.textContent = 'كلمات المرور متطابقة ✓';
+            passwordMatch.style.color = '#28a745';
+            return true;
+        }
+    }
+
+    if (password2) {
+        password2.addEventListener('input', validatePasswordMatch);
+        password2.addEventListener('blur', validatePasswordMatch);
+    }
+
+    // Real-time validation for all inputs
+    const inputs = form.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                if (this.checkValidity()) {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                } else {
+                    this.classList.remove('is-valid');
+                    this.classList.add('is-invalid');
+                }
+            } else {
+                this.classList.remove('is-valid', 'is-invalid');
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            if (this.hasAttribute('required') && this.value.trim() === '') {
+                this.classList.add('is-invalid');
+                this.classList.remove('is-valid');
+            }
+        });
+    });
+
+    // Terms checkbox validation
+    if (agreeTerms) {
+        agreeTerms.addEventListener('change', function() {
+            if (this.checked) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            } else {
+                this.classList.remove('is-valid');
+                this.classList.add('is-invalid');
+            }
+        });
+    }
+
+    // Form submission
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            // Prevent default submission
+            event.preventDefault();
+            event.stopPropagation();
+
+            let isValid = true;
+
+            // Validate all required fields
+            const requiredInputs = form.querySelectorAll('input[required]');
+            requiredInputs.forEach(input => {
+                if (!input.checkValidity() || input.value.trim() === '') {
+                    input.classList.add('is-invalid');
+                    input.classList.remove('is-valid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                }
+            });
+
+            // Check password match
+            if (!validatePasswordMatch()) {
+                isValid = false;
+            }
+
+            // Check terms agreement
+            if (!agreeTerms.checked) {
+                agreeTerms.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            // If form is not valid, show validation messages
+            if (!isValid) {
+                form.classList.add('was-validated');
+
+                // Scroll to first invalid field
+                const firstInvalid = form.querySelector('.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            loadingSpinner.classList.remove('d-none');
+            submitIcon.classList.add('d-none');
+            submitText.textContent = 'جاري إنشاء الحساب...';
+
+            // Submit form after a short delay
+            setTimeout(() => {
+                // Create a new form submission without preventDefault
+                const formData = new FormData(form);
+
+                // Submit using fetch to handle errors better
+                fetch(form.action || window.location.href, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // If successful, redirect
+                        window.location.href = response.url || '{% url "tasks:dashboard" %}';
+                    } else {
+                        // If error, reload page to show Django form errors
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    loadingSpinner.classList.add('d-none');
+                    submitIcon.classList.remove('d-none');
+                    submitText.textContent = 'إنشاء الحساب';
+
+                    // Show error message
+                    alert('حدث خطأ أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى.');
+                });
+            }, 1000);
+        });
+    }
+});
+</script>
+{% endblock %}

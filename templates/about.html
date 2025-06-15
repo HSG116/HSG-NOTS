@@ -1,0 +1,1188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "من نحن" %} - HSG Notes{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="1000,100 1000,0 0,100"/></svg>');
+        background-size: cover;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .company-logo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid rgba(255,255,255,0.3);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease;
+    }
+    
+    .company-logo:hover {
+        transform: scale(1.05);
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: none;
+        height: 100%;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .feature-card:active {
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #25D366, #128C7E);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 2rem;
+    }
+    
+    .stats-section {
+        background: #f8f9fa;
+        padding: 80px 0;
+    }
+    
+    .stat-card {
+        text-align: center;
+        padding: 30px;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #25D366;
+        display: block;
+    }
+    
+    .stat-label {
+        color: #6c757d;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+    
+    .team-section {
+        padding: 80px 0;
+    }
+    
+    .team-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .team-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+    }
+    
+    .team-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        border: 4px solid #25D366;
+    }
+    
+    .contact-section {
+        background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+        color: white;
+        padding: 80px 0;
+    }
+    
+    .contact-card {
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .contact-icon {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #25D366;
+    }
+    
+    .btn-custom {
+        background: linear-gradient(135deg, #25D366, #128C7E);
+        border: none;
+        color: white;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        color: white;
+    }
+
+    .btn-custom:active {
+        transform: translateY(0);
+    }
+
+    /* Loading Animation */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Staggered Animation */
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+    .feature-card:nth-child(4) { animation-delay: 0.4s; }
+    .feature-card:nth-child(5) { animation-delay: 0.5s; }
+    .feature-card:nth-child(6) { animation-delay: 0.6s; }
+
+    .contact-card:nth-child(1) { animation-delay: 0.1s; }
+    .contact-card:nth-child(2) { animation-delay: 0.2s; }
+    .contact-card:nth-child(3) { animation-delay: 0.3s; }
+    .contact-card:nth-child(4) { animation-delay: 0.4s; }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: #2c3e50;
+    }
+    
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-bottom: 50px;
+    }
+
+    /* Social Media Buttons */
+    .social-media-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .social-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: white;
+        border: 2px solid rgba(255,255,255,0.3);
+        backdrop-filter: blur(10px);
+    }
+
+    .social-btn i {
+        font-size: 1.2rem;
+        margin-left: 8px;
+    }
+
+    .social-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        color: white;
+    }
+
+    .social-btn.youtube:hover {
+        background: #FF0000;
+        border-color: #FF0000;
+    }
+
+    .social-btn.tiktok:hover {
+        background: #000000;
+        border-color: #000000;
+    }
+
+    .social-btn.whatsapp:hover {
+        background: #25D366;
+        border-color: #25D366;
+    }
+
+    .social-btn.email:hover {
+        background: #EA4335;
+        border-color: #EA4335;
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+        /* Hero Section Mobile */
+        .hero-section {
+            padding: 40px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 50%, #075E54 100%);
+        }
+
+        .hero-section .container {
+            padding: 0 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 1.6rem;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-section .lead {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+
+        .hero-section p {
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-section .btn-custom,
+        .hero-section .btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-section .btn-custom:hover,
+        .hero-section .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero-section .row {
+            flex-direction: column-reverse;
+        }
+
+        .hero-section .col-lg-6:last-child {
+            margin-bottom: 30px;
+        }
+
+        /* Features Section Mobile */
+        .feature-card {
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(37, 211, 102, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.2);
+            border-color: rgba(37, 211, 102, 0.3);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .feature-card h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #6c757d;
+        }
+
+        /* Section Titles Mobile */
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Sections Padding Mobile */
+        .stats-section,
+        .team-section,
+        .contact-section {
+            padding: 40px 0;
+        }
+
+        .py-5 {
+            padding: 40px 0 !important;
+        }
+
+        /* Stats Section Mobile */
+        .stat-card {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+        }
+
+        /* Team Section Mobile */
+        .team-card {
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+
+        .team-avatar {
+            width: 70px;
+            height: 70px;
+        }
+
+        .team-card h4 {
+            font-size: 1.1rem;
+        }
+
+        .team-card p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Contact Cards Mobile */
+        .contact-card {
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #25D366;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .contact-card h5 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .contact-card p {
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .contact-card .btn {
+            padding: 10px 25px;
+            font-size: 0.85rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+        }
+
+        /* Social Media Mobile */
+        .social-media-links {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .social-btn {
+            width: 250px;
+            justify-content: center;
+            margin-bottom: 10px;
+            padding: 15px 30px;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .social-btn i {
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .social-btn.youtube:hover {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            border-color: #FF0000;
+            box-shadow: 0 10px 30px rgba(255,0,0,0.4);
+        }
+
+        .social-btn.tiktok:hover {
+            background: linear-gradient(135deg, #000000, #333333);
+            border-color: #000000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .social-btn.whatsapp:hover {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-color: #25D366;
+            box-shadow: 0 10px 30px rgba(37,211,102,0.4);
+        }
+
+        .social-btn.email:hover {
+            background: linear-gradient(135deg, #EA4335, #D33B2C);
+            border-color: #EA4335;
+            box-shadow: 0 10px 30px rgba(234,67,53,0.4);
+        }
+
+        /* Company Info Section Mobile */
+        .bg-light {
+            padding: 40px 0 !important;
+        }
+
+        .bg-light .row > div {
+            margin-bottom: 20px;
+        }
+
+        .bg-light .feature-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        .bg-light h5 {
+            font-size: 0.95rem;
+        }
+
+        .bg-light p {
+            font-size: 0.8rem;
+        }
+
+        /* General Mobile Improvements */
+        .btn-custom {
+            padding: 12px 25px;
+            font-size: 0.9rem;
+            border-radius: 25px;
+        }
+
+        .container {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Social Links in Team Section */
+        .social-links .btn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        /* Extra Small Screens */
+        .hero-section {
+            padding: 25px 0;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        }
+
+        .hero-section h1 {
+            font-size: 1.3rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .hero-section .lead {
+            font-size: 0.8rem;
+            opacity: 0.95;
+        }
+
+        .hero-section p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .company-logo {
+            width: 45px;
+            height: 45px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        /* Cards Extra Small */
+        .feature-card,
+        .team-card {
+            margin-bottom: 15px;
+            padding: 20px 15px;
+            border-radius: 18px;
+        }
+
+        .contact-card {
+            margin-bottom: 15px;
+            padding: 20px 15px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 12px rgba(37, 211, 102, 0.4);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+        }
+
+        /* Stats Extra Small */
+        .stat-number {
+            font-size: 1.8rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+        }
+
+        /* Buttons Extra Small */
+        .btn-custom {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+        }
+
+        .social-btn {
+            width: 100%;
+            max-width: 280px;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Contact Cards Extra Small */
+        .contact-card {
+            padding: 15px 12px;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        .contact-card h5 {
+            font-size: 0.9rem;
+        }
+
+        .contact-card p {
+            font-size: 0.75rem;
+        }
+
+        /* Spacing Adjustments */
+        .stats-section,
+        .team-section,
+        .contact-section {
+            padding: 30px 0;
+        }
+
+        .py-5 {
+            padding: 30px 0 !important;
+        }
+
+        .stats-section .row > div {
+            margin-bottom: 15px;
+        }
+
+        /* Team Section Extra Small */
+        .team-avatar {
+            width: 60px;
+            height: 60px;
+        }
+
+        .team-card h4 {
+            font-size: 1rem;
+        }
+
+        .team-card p {
+            font-size: 0.8rem;
+        }
+
+        /* Social Links Extra Small */
+        .social-links .btn {
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            margin: 1px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center hero-content">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    {% trans "مرحباً بكم في" %} <span class="text-warning">HSG Notes</span>
+                </h1>
+                <p class="lead mb-4">
+                    {% trans "نظام إدارة المهام الذكي المطور من قبل شركة HSG بقيادة المهندس محمد زياد" %}
+                </p>
+                <p class="mb-4">
+                    {% trans "نحن نؤمن بأن التنظيم والإنتاجية هما مفتاح النجاح في العصر الرقمي" %}
+                </p>
+                <a href="{% url 'tasks:create' %}" class="btn-custom me-3">
+                    <i class="fas fa-plus me-2"></i>
+                    {% trans "ابدأ الآن" %}
+                </a>
+                <a href="https://hsg-ashy.vercel.app/" target="_blank" class="btn btn-outline-light">
+                    <i class="fas fa-external-link-alt me-2"></i>
+                    {% trans "زيارة موقع الشركة" %}
+                </a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="https://i.postimg.cc/6QW52R6Z/1000023429.png" alt="HSG Logo" class="company-logo">
+                <h3 class="mt-4 fw-bold">HSG Company</h3>
+                <p class="mb-0">{% trans "الريادة في التكنولوجيا" %}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="section-title">{% trans "لماذا HSG Notes؟" %}</h2>
+                <p class="section-subtitle">
+                    {% trans "نقدم حلولاً متطورة لإدارة المهام والمشاريع بأحدث التقنيات" %}
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">{% trans "ذكاء اصطناعي متقدم" %}</h4>
+                    <p class="text-muted">
+                        {% trans "مساعد ذكي يساعدك في تنظيم مهامك وتحسين إنتاجيتك" %}
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">{% trans "تصميم متجاوب" %}</h4>
+                    <p class="text-muted">
+                        {% trans "يعمل بسلاسة على جميع الأجهزة - الهاتف والكمبيوتر واللوحي" %}
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">{% trans "أمان عالي" %}</h4>
+                    <p class="text-muted">
+                        {% trans "حماية متقدمة لبياناتك مع تشفير من الدرجة العسكرية" %}
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">{% trans "مواقع جغرافية" %}</h4>
+                    <p class="text-muted">
+                        {% trans "ربط المهام بالمواقع الجغرافية للتذكير الذكي" %}
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">{% trans "تقويم تفاعلي" %}</h4>
+                    <p class="text-muted">
+                        {% trans "عرض مرئي لجميع مهامك ومواعيدك في تقويم جميل" %}
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3">{% trans "تقارير ذكية" %}</h4>
+                    <p class="text-muted">
+                        {% trans "تحليلات مفصلة لإنتاجيتك وتقدمك في المهام" %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <span class="stat-number">10K+</span>
+                    <div class="stat-label">{% trans "مستخدم نشط" %}</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <span class="stat-number">50K+</span>
+                    <div class="stat-label">{% trans "مهمة مكتملة" %}</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <span class="stat-number">99.9%</span>
+                    <div class="stat-label">{% trans "وقت التشغيل" %}</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <span class="stat-number">24/7</span>
+                    <div class="stat-label">{% trans "دعم فني" %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="section-title">{% trans "فريق العمل" %}</h2>
+                <p class="section-subtitle">
+                    {% trans "نخبة من المطورين والمصممين المتخصصين في التكنولوجيا" %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="team-card">
+                    <img src="https://i.postimg.cc/6QW52R6Z/1000023429.png" alt="محمد زياد" class="team-avatar">
+                    <h4 class="fw-bold mb-2">{% trans "المهندس محمد زياد" %}</h4>
+                    <p class="text-primary mb-3">{% trans "المؤسس والرئيس التنفيذي" %}</p>
+                    <p class="text-muted mb-4">
+                        {% trans "خبير في تطوير التطبيقات والمواقع الإلكترونية مع أكثر من 10 سنوات من الخبرة في مجال التكنولوجيا" %}
+                    </p>
+                    <div class="social-links">
+                        <a href="{{ COMPANY_WEBSITE }}" target="_blank" class="btn btn-outline-primary btn-sm me-2" title="موقع الشركة">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                        <a href="{{ COMPANY_YOUTUBE }}" target="_blank" class="btn btn-outline-danger btn-sm me-2" title="قناة اليوتيوب">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="{{ COMPANY_TIKTOK }}" target="_blank" class="btn btn-outline-dark btn-sm me-2" title="تيك توك">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="{{ COMPANY_WHATSAPP }}" target="_blank" class="btn btn-outline-success btn-sm" title="واتساب">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Company Info Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-title">{% trans "عن شركة HSG" %}</h2>
+                <p class="lead mb-4">
+                    {% trans "شركة HSG هي شركة رائدة في مجال تطوير التطبيقات والمواقع الإلكترونية" %}
+                </p>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">{% trans "الابتكار" %}</h5>
+                                <p class="text-muted small">{% trans "نستخدم أحدث التقنيات" %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">{% trans "فريق محترف" %}</h5>
+                                <p class="text-muted small">{% trans "خبراء في التطوير" %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">{% trans "جودة عالية" %}</h5>
+                                <p class="text-muted small">{% trans "معايير عالمية" %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start">
+                            <div class="feature-icon me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">{% trans "دعم مستمر" %}</h5>
+                                <p class="text-muted small">{% trans "خدمة 24/7" %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="https://i.postimg.cc/6QW52R6Z/1000023429.png" alt="HSG Company" class="img-fluid" style="max-width: 300px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-4">{% trans "تواصل معنا" %}</h2>
+                <p class="lead">
+                    {% trans "نحن هنا لمساعدتك في تحقيق أهدافك وتطوير مشاريعك" %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">{% trans "موقع الشركة" %}</h5>
+                    <p class="mb-3">{% trans "زيارة موقعنا الرسمي" %}</p>
+                    <a href="{{ COMPANY_WEBSITE }}" target="_blank" class="btn btn-outline-light">
+                        {% trans "زيارة الموقع" %}
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">{% trans "البريد الإلكتروني" %}</h5>
+                    <p class="mb-3">{{ COMPANY_EMAIL }}</p>
+                    <a href="mailto:{{ COMPANY_EMAIL }}" class="btn btn-outline-light">
+                        {% trans "إرسال رسالة" %}
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">{% trans "واتساب" %}</h5>
+                    <p class="mb-3">{% trans "تواصل معنا مباشرة" %}</p>
+                    <a href="{{ COMPANY_WHATSAPP }}" target="_blank" class="btn btn-outline-light">
+                        {% trans "تواصل الآن" %}
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">{% trans "قناة اليوتيوب" %}</h5>
+                    <p class="mb-3">{% trans "تابع أحدث الفيديوهات" %}</p>
+                    <a href="{{ COMPANY_YOUTUBE }}" target="_blank" class="btn btn-outline-light">
+                        {% trans "اشترك الآن" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <h4 class="fw-bold mb-4 text-white">{% trans "تابعنا على وسائل التواصل" %}</h4>
+                <div class="social-media-links">
+                    <a href="{{ COMPANY_YOUTUBE }}" target="_blank" class="social-btn youtube me-3">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </a>
+                    <a href="{{ COMPANY_TIKTOK }}" target="_blank" class="social-btn tiktok me-3">
+                        <i class="fab fa-tiktok"></i>
+                        <span>TikTok</span>
+                    </a>
+                    <a href="{{ COMPANY_WHATSAPP }}" target="_blank" class="social-btn whatsapp me-3">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="mailto:{{ COMPANY_EMAIL }}" class="social-btn email">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <p class="lead mb-4">
+                    {% trans "انضم إلى آلاف المستخدمين الذين يثقون في HSG Notes" %}
+                </p>
+                <a href="{% url 'accounts:signup' %}" class="btn-custom">
+                    <i class="fas fa-user-plus me-2"></i>
+                    {% trans "إنشاء حساب مجاني" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add fade-in animation to elements
+    const animatedElements = document.querySelectorAll('.feature-card, .contact-card, .team-card, .stat-card');
+
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add hover effects for mobile touch
+    const touchElements = document.querySelectorAll('.feature-card, .contact-card, .social-btn');
+
+    touchElements.forEach(el => {
+        el.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.98)';
+        });
+
+        el.addEventListener('touchend', function() {
+            this.style.transform = '';
+        });
+    });
+
+    // Counter animation for stats
+    const counters = document.querySelectorAll('.stat-number');
+
+    const animateCounter = (counter) => {
+        const target = counter.textContent;
+        const isNumber = /^\d+/.test(target);
+
+        if (isNumber) {
+            const finalNumber = parseInt(target.replace(/\D/g, ''));
+            const suffix = target.replace(/[\d,]/g, '');
+            let current = 0;
+            const increment = finalNumber / 50;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= finalNumber) {
+                    counter.textContent = finalNumber.toLocaleString() + suffix;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current).toLocaleString() + suffix;
+                }
+            }, 30);
+        }
+    };
+
+    // Observe counters
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    });
+
+    counters.forEach(counter => {
+        counterObserver.observe(counter);
+    });
+
+    // Add loading state to external links
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        link.addEventListener('click', function() {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>' + this.textContent;
+
+            setTimeout(() => {
+                this.innerHTML = originalText;
+            }, 2000);
+        });
+    });
+});
+</script>
+{% endblock %}

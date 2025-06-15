@@ -1,0 +1,125 @@
+WARNING 2025-06-05 02:47:44,790 middleware 2492 11536 Slow request: /ai/api/send-message/ took 8.056s
+WARNING 2025-06-05 02:48:08,364 middleware 2492 11536 Slow request: /ai/api/send-message/ took 6.544s
+WARNING 2025-06-05 04:16:30,611 middleware 16196 16112 Slow request: /accounts/login/ took 2.238s
+WARNING 2025-06-05 04:16:30,906 middleware 16196 5820 Slow request: /accounts/login/ took 2.199s
+WARNING 2025-06-10 01:47:16,378 middleware 3548 9176 Slow request: /accounts/login/ took 2.847s
+WARNING 2025-06-10 01:48:37,225 middleware 5684 13240 Slow request: /ai/api/send-message/ took 3.962s
+ERROR 2025-06-10 01:50:00,798 exception 14860 11568 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2025-06-10 01:50:01,485 exception 14860 11568 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2025-06-10 01:50:01,559 exception 14860 11568 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2025-06-10 01:50:01,637 exception 14860 11568 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+WARNING 2025-06-10 01:50:48,766 middleware 3376 5656 Slow request: /ai/api/send-message/ took 3.133s
+WARNING 2025-06-10 01:57:51,454 middleware 9328 7176 Slow request: /ai/api/send-message/ took 4.255s
+WARNING 2025-06-10 01:59:20,485 middleware 9328 7176 Slow request: /ai/api/send-message/ took 2.092s
+ERROR 2025-06-10 02:00:31,479 exception 10624 15220 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+WARNING 2025-06-10 02:02:21,484 middleware 12784 13288 Slow request: /ai/api/send-message/ took 2.172s
+WARNING 2025-06-10 02:10:13,107 middleware 3544 9892 Slow request: /ai/api/send-message/ took 2.979s
+WARNING 2025-06-10 02:10:49,088 middleware 3544 9892 Slow request: /ai/api/send-message/ took 2.135s
+ERROR 2025-06-15 23:56:39,419 exception 13164 12848 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2025-06-15 23:56:39,693 exception 13164 12848 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2025-06-15 23:56:39,748 exception 13164 12848 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2025-06-15 23:56:39,784 exception 13164 12848 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2025-06-15 23:56:39,844 exception 13164 12848 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\utils\deprecation.py", line 133, in __call__
+    response = self.process_request(request)
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\HSG\Music\„Êﬁ⁄ „·«ÕŸ… - Copy\venv\Lib\site-packages\django\http\request.py", line 150, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+WARNING 2025-06-16 00:25:48,980 middleware 11984 1936 Slow request: /accounts/login/ took 2.269s
+WARNING 2025-06-16 00:25:49,474 middleware 11984 5932 Slow request: /accounts/login/ took 2.096s
+WARNING 2025-06-16 00:27:31,255 middleware 11984 5932 Slow request: /ai/api/send-message/ took 3.773s
